@@ -1,18 +1,24 @@
 # !/usr/bin/env python
 
-from lib import db, export, io
+# from lib import db, export, io
+from app import io
 import untangle
 
 
 def main():
+    io.main()
+
     # export.export()
     # parse_employee_salaries('data/employe_salaire_2_2019-10-01_22-06-35.xml')
     # parse_projects(['data/projets_1_2019-08-27_22-06-33.xml', 'data/projets_2_2019-10-01_22-06-42.xml'])
+
+    """
     values = parse_billed_incomes(['data/revenu_factr_2_2019-10-01_22-06-55.xml'])
     connection = db.create_connection('data/db.sqlite')
     db.create_table(connection, 'billed_income')
     db.inserts(connection, values)
     connection.close()
+    """
 
 
 def parse_billed_incomes(filenames):
