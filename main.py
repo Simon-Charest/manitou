@@ -1,14 +1,12 @@
 # !/usr/bin/env python
-
-
 def main():
     from app import db, io, xml
     import glob
     import json
 
     # Variable declarations
-    db_file = 'data/db.sqlite'
-    pathname = 'data/import/*.xml'
+    db_file = 'data/output/db.sqlite'
+    pathname = 'data/input/*.xml'
     encoding = 'utf-8'
     column = 'value'
     datatype = 'text'
