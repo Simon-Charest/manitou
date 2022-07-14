@@ -33,7 +33,7 @@ def main():
         # Read file
         string = io.read(path, encoding)
 
-        # Extract table name and data dictionary
+        # Extract table name and data
         table, data = xml.parse(string, encoding)
 
         # Create table
@@ -41,7 +41,7 @@ def main():
 
         # If data are present...
         if data:
-            # For each item in array...
+            # For each dictionary in list...
             for datum in data:
                 # Serialize object to JSON formatted string
                 json_string = json.dumps(datum, ensure_ascii=ensure_ascii)
