@@ -19,6 +19,8 @@ flowchart TD
     D[SQLite] --> E[Power BI]
 ```
 
+---
+
 ## Installation
 1. Download and extract the project from [GitHub](https://github.com/Simon-Charest/manitou) (e.g., Code &rarr; Download ZIP &rarr; go to This PC &rarr; Downloads &rarr; select file &rarr; context menu &rarr; Extract All... to `C:\temp\manitou`);
 2. Run Windows PowerShell as an administrator;
@@ -28,19 +30,46 @@ flowchart TD
 1. Run Windows PowerShell;
 2. Execute `python "main.py"`.
 
+---
+
+## Power BI
+1. Install [Power BI](https://powerbi.microsoft.com/en-us/downloads/);
+2. Run Power BI;
+
+### A. Get data from JSON data files (recommended)
+3. File &rarr; Get Data &rarr; Get data to get started &rarr; JSON &rarr; Connect;
+4. Select the first file &rarr; Open;
+5. Home &rarr; New Source &rarr; JSON &rarr; JSON;
+6. Select next file &rarr; Open;
+7. Repeat steps 5 and 6 for each file;
+
+### B. Get data from a SQLite database file
+3. Install [SQLite ODBC Driver](http://www.ch-werner.de/sqliteodbc/) (for Win64);
+4. File &rarr; Get Data &rarr; Get data to get started &rarr; ODBC &rarr; Connect;
+5. Data source name (DSN): SQLite3 Datasource;
+6. Connection string (non-credential properties): `Database=C:\temp\manitou\db.sqlite`;
+7. Check all tables &rarr; Load;
+8. Select each table &rarr; Transform &rarr; Parse &rarr; JSON &rarr; Record;
+
+### Save Power BI file
+9. Close & Apply;
+10. File &rarr; Save &rarr; File name: `"C:\src\Forensik\manitou\data\manitou.pbix"`.
+
+---
+
 ## About Manitou
-- Application: [Manitou](https://manitousolution.com/application)
-- Developer: [Manitou Solution](https://manitousolution.com)
-- Address: [412-825, Lebourgneuf Boulevard, Quebec, QC, G2J 0B9](https://www.google.com/maps/place/825+Bd+Lebourgneuf+bureau+412,+Qu%C3%A9bec,+QC+G2J+0B9)
-- Technologies: [APEX](https://en.wikipedia.org/wiki/Oracle_Application_Express), [JS](https://en.wikipedia.org/wiki/JavaScript), [PHP](https://en.wikipedia.org/wiki/PHP), [WordPress](https://en.wikipedia.org/wiki/WordPress)
-- Web server: [Nginx](https://en.wikipedia.org/wiki/Nginx)
-- Web API: [Oracle REST Data Services (ORDS)](https://en.wikipedia.org/wiki/Oracle_Application_Express#APEX_Service)
+- Application: [Manitou](https://manitousolution.com/application);
+- Developer: [Manitou Solution](https://manitousolution.com);
+- Address: [412-825, Lebourgneuf Boulevard, Quebec, QC, G2J 0B9](https://www.google.com/maps/place/825+Bd+Lebourgneuf+bureau+412,+Qu%C3%A9bec,+QC+G2J+0B9);
+- Technologies: [APEX](https://en.wikipedia.org/wiki/Oracle_Application_Express), [JS](https://en.wikipedia.org/wiki/JavaScript), [PHP](https://en.wikipedia.org/wiki/PHP), [WordPress](https://en.wikipedia.org/wiki/WordPress);
+- Web server: [Nginx](https://en.wikipedia.org/wiki/Nginx);
+- Web API: [Oracle REST Data Services (ORDS)](https://en.wikipedia.org/wiki/Oracle_Application_Express#APEX_Service).
 
 ## About this solution
 © Simon Charest | [Forensik](https://forensik.ca/) | [In Fidem](https://infidem.biz/) | [Atos](https://atos.net/). All rights reserved.
 
 ## About the author
 Mr. Simon Charest, Software Developer and CEO at SLCIT Inc.
-- [Email](mailto:simoncharest@gmail.com)
-- [GitHub](https://github.com/Simon-Charest)
-- [LinkedIn](https://www.linkedin.com/in/simoncharest/)
+- [Email](mailto:simoncharest@gmail.com);
+- [GitHub](https://github.com/Simon-Charest);
+- [LinkedIn](https://www.linkedin.com/in/simoncharest/).

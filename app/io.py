@@ -13,8 +13,8 @@ def remove(path):
         os.remove(file.path)
 
 
-def write(string, file, mode='w'):
+def write(string, file, mode='w', encoding=None):
     if string:
-        stream = open(file, mode)
+        stream = open(file, mode, encoding=encoding)
         stream.write(string)
         stream.close()
