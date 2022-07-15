@@ -1,24 +1,58 @@
 # !/usr/bin/env python
 def main():
-    convert_to_json()
+    from colorama import Fore
+    import argparse
+    import colorama
+
+    # Parse arguments
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--input', default='data/input/*.xml', help='Input pathname (default: data/input/*.xml)')
+    parser.add_argument('--output', default='data/output', help='Output directory (default: data/output)')
+    parser.add_argument('--encoding', default='utf-8', help='File encoding (default: utf-8)')
+    parser.add_argument('--ensure_ascii', action='store_true', help='Ensure ASCII encoding (default: False)')
+    parser.add_argument('--indent', default='\t', help='Indentation (default: \\t)')
+    parser.add_argument('--mode', default='a', help='File mode (default: a)')
+    parser.add_argument('--verbose', action='store_true', help='Verbose (default: False)')
+    arguments = parser.parse_args()
+
+    # Initialise colorama
+    colorama.init()
+
+    # Convert XML data to JSON
+    convert_to_json(arguments.input, arguments.output, arguments.encoding, arguments.ensure_ascii, arguments.indent,
+                    arguments.mode, arguments.verbose)
+
+    # Convert XML data to SQLite
+    # convert_to_sqlite(arguments.input, 'data/output/db.sqlite')
+
+    if arguments.verbose:
+        print(f'{Fore.GREEN}** DONE **')
 
 
-def convert_to_json():
+def convert_to_json(input_pathname, output_directory, encoding=None, ensure_ascii=False, indent=None, mode='w',
+                    verbose=False):
     from app import io, xml
+    from colorama import Fore
     import glob
     import json
     import os
 
-    # Variable declarations
-    pathname = 'data/input/*.xml'
-    encoding = 'utf-8'
-    ensure_ascii = False
-    indent = '\t'
-    output_directory = 'data/output'
-    mode = 'a'
+    # List previous output files
+    paths = glob.glob(f'{output_directory}/*.json')
 
-    # List files
-    paths = glob.glob(pathname)
+    # For each file...
+    for path in paths:
+        # Delete file
+        os.remove(path)
+
+    if verbose:
+        print(f'{Fore.RED}Deleted {len(paths)} JSON files in {output_directory}.')
+
+    # List input files
+    paths = glob.glob(input_pathname)
+
+    if verbose:
+        print(f'{Fore.YELLOW}Found {len(paths)} XML files in {os.path.dirname(input_pathname)}.')
 
     # For each file...
     for path in paths:
@@ -34,30 +68,21 @@ def convert_to_json():
         # Set file name
         file = f'{output_directory}/{table}.json'
 
-        # If file already exists...
-        if os.path.exists(file):
-            # Delete file
-            os.remove(file)
-
         # Append to file
         io.write(json_string, file, mode, encoding=encoding)
 
+        if verbose and data:
+            print(f'{Fore.GREEN}Wrote {len(data)} documents to {file}.')
 
-def convert_to_sqlite():
+
+def convert_to_sqlite(input_pathname, output_db_file, encoding='utf-8', column='value', datatype='text',
+                      ensure_ascii=False):
     from app import db, io, xml
     import glob
     import json
 
-    # Variable declarations
-    db_file = 'data/output/db.sqlite'
-    pathname = 'data/input/*.xml'
-    encoding = 'utf-8'
-    column = 'value'
-    datatype = 'text'
-    ensure_ascii = False
-
     # Connect to database
-    connection = db.create_connection(db_file)
+    connection = db.create_connection(output_db_file)
 
     # Get all table names
     tables = db.get_tables(connection)
@@ -68,7 +93,7 @@ def convert_to_sqlite():
         db.delete(connection, table)
 
     # List files
-    paths = glob.glob(pathname)
+    paths = glob.glob(input_pathname)
 
     # For each file...
     for path in paths:
