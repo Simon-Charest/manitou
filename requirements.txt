@@ -1,0 +1,4 @@
+colorama
+pip
+setuptools
+xmltodict
