@@ -5,9 +5,11 @@ def main():
     import colorama
 
     # Parse arguments
+    input_pathname = 'data/input/*.xml'
+    output_directory = 'data/output'
     parser = argparse.ArgumentParser()
-    parser.add_argument('--input', default='data/input/*.xml', help='Input pathname (default: data/input/*.xml)')
-    parser.add_argument('--output', default='data/output', help='Output directory (default: data/output)')
+    parser.add_argument('--input', default=input_pathname, help=f'Input pathname (default: {input_pathname})')
+    parser.add_argument('--output', default=output_directory, help=f'Output directory (default: {output_directory})')
     parser.add_argument('--encoding', default='utf-8', help='File encoding (default: utf-8)')
     parser.add_argument('--ensure_ascii', action='store_true', help='Ensure ASCII encoding (default: False)')
     parser.add_argument('--indent', default='\t', help='Indentation (default: \\t)')
