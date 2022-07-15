@@ -10,5 +10,6 @@ curl "https://bootstrap.pypa.io/get-pip.py" -o "$($PSScriptRoot)\\bin\\get-pip.p
 # Install pip
 python "$($PSScriptRoot)\\bin\\get-pip.py"
 
-# Install xmltodict
+# Install requirements
+pip install colorama
 pip install xmltodict
