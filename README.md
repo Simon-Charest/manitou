@@ -28,11 +28,13 @@ flowchart TD
 
 ## Usage
 1. Run Windows PowerShell;
-2. Execute `python "main.py"`.
+2. Execute `python main.py --input "data/input/*.xml" --output "data/output" --verbose`.
 
 ---
 
 ## Power BI
+
+### Create new report
 1. Install [Power BI](https://powerbi.microsoft.com/en-us/downloads/);
 2. Run Power BI;
 
