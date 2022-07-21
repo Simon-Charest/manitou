@@ -10,6 +10,12 @@ This solution:
 4. Inserts this data into a local [SQLite](https://en.wikipedia.org/wiki/SQLite) database file (i.e., data/output/db.sqlite), as [NoSQL](https://en.wikipedia.org/wiki/NoSQL) documents;
 5. Which can then be used by solutions such as [Power BI](https://en.wikipedia.org/wiki/Microsoft_Power_BI).
 
+To do:
+- The solution should include a web API access to live data with secure authentication (i.e., OAuth 2.0);
+- The solution data should be segregated (i.e. one database per customer) and fully accessible by its owner, in order to comply with the [Act to modernize legislative provisions as regards the protection of personal information](http://assnat.qc.ca/en/travaux-parlementaires/projets-loi/projet-loi-64-42-1.html), which will come into force on 2023-09-22, in the province of Quebec;
+- The solution should include a reporting module (i.e., Power BI);
+- The solution's data export module must be live (i.e., based on a replication of the production database, via a queuing mechanism), recurring and automatic.
+
 ## Flowchart
 ```mermaid
 flowchart TD
@@ -66,6 +72,12 @@ flowchart TD
 - Technologies: [APEX](https://en.wikipedia.org/wiki/Oracle_Application_Express), [JS](https://en.wikipedia.org/wiki/JavaScript), [PHP](https://en.wikipedia.org/wiki/PHP), [WordPress](https://en.wikipedia.org/wiki/WordPress);
 - Web server: [Nginx](https://en.wikipedia.org/wiki/Nginx);
 - Web API: [Oracle REST Data Services (ORDS)](https://en.wikipedia.org/wiki/Oracle_Application_Express#APEX_Service).
+
+## Related solutions
+- [Dynamics 365](https://dynamics.microsoft.com/);
+- [JIRA](https://www.atlassian.com/software/jira);
+- [Nethris](https://nethris.com/);
+- [Sage](https://www.sage.com/).
 
 ## About this solution
 © Simon Charest | [Forensik](https://forensik.ca/) | [In Fidem](https://infidem.biz/) | [Atos](https://atos.net/). All rights reserved.
