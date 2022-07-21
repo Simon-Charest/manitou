@@ -1,9 +1,17 @@
 def read(file, encoding=None):
+    import json
+
     stream = open(file, encoding=encoding)
-    string = stream.read()
+
+    if file[-5:] == '.json':
+        data = json.load(stream)
+
+    else:
+        data = stream.read()
+
     stream.close()
 
-    return string
+    return data
 
 
 def remove(path):
@@ -13,8 +21,15 @@ def remove(path):
         os.remove(file.path)
 
 
-def write(string, file, mode='w', encoding=None):
-    if string:
+def write(object_, file, mode='w', encoding=None):
+    if object_:
         stream = open(file, mode, encoding=encoding)
-        stream.write(string)
+
+        if isinstance(object_, list):
+            for element in object_:
+                stream.write(f'{element}\n')
+
+        else:
+            stream.write(object_)
+
         stream.close()

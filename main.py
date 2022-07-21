@@ -13,7 +13,7 @@ def main():
     parser.add_argument('--encoding', default='utf-8', help='File encoding (default: utf-8)')
     parser.add_argument('--ensure_ascii', action='store_true', help='Ensure ASCII encoding (default: False)')
     parser.add_argument('--indent', default='\t', help='Indentation (default: \\t)')
-    parser.add_argument('--mode', default='a', help='File mode (default: a)')
+    parser.add_argument('--mode', default='w', help='File mode (default: w)')
     parser.add_argument('--verbose', action='store_true', help='Verbose (default: False)')
     arguments = parser.parse_args()
 
@@ -39,16 +39,12 @@ def convert_to_json(input_pathname, output_directory, encoding=None, ensure_asci
     import json
     import os
 
-    # List previous output files
-    paths = glob.glob(f'{output_directory}/*.json')
+    # Delete output files
+    files = glob.glob(f'{output_directory}/*.json')
+    for file in files:
+        os.remove(file)
 
-    # For each file...
-    for path in paths:
-        # Delete file
-        os.remove(path)
-
-    if verbose:
-        print(f'{Fore.RED}Deleted {len(paths)} JSON files in {output_directory}.')
+    print(f'{Fore.RED}Deleted {len(files)} JSON files in {output_directory}.')
 
     # List input files
     paths = glob.glob(input_pathname)
@@ -61,20 +57,34 @@ def convert_to_json(input_pathname, output_directory, encoding=None, ensure_asci
         # Read file
         string = io.read(path, encoding)
 
-        # Extract table name and data
-        table, data = xml.parse(string, encoding)
+        # Parse XML data to JSON
+        dictionary = xml.parse(string, encoding)
 
-        # Serialize object to JSON formatted string
+        # Extract table name and data from dictionary
+        table_name, data = xml.get_table_name_and_data(dictionary)
+
+        # Set output file name
+        file = f'{output_directory}/{table_name}.json'
+
+        # Set length of the list of new elements
+        length = len(data)
+
+        # If preexisting file found...
+        if os.path.exists(file):
+            # Read and deserialize JSON document to object
+            json_objects = io.read(file, encoding)
+
+            # Append to preexisting data
+            data = json_objects + data
+
+        # Serialize object to JSON document
         json_string = json.dumps(data, ensure_ascii=ensure_ascii, indent=indent)
-
-        # Set file name
-        file = f'{output_directory}/{table}.json'
 
         # Append to file
         io.write(json_string, file, mode, encoding=encoding)
 
         if verbose and data:
-            print(f'{Fore.GREEN}Wrote {len(data)} documents to {file}.')
+            print(f'{Fore.GREEN}Wrote {length} documents to {file}.')
 
 
 def convert_to_sqlite(input_pathname, output_db_file, encoding='utf-8', column='value', datatype='text',
