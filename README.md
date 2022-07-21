@@ -42,7 +42,7 @@ flowchart TD
 
 ## Convert data using this solution
 1. Run Windows PowerShell;
-2. Execute `python main.py --input "data/input/*.xml" --output "data/output" --verbose`.
+2. Execute `python "main.py" --input "data/input/*.xml" --output "data/output" --verbose`.
 
 ## Import data into Power BI
 ### Create new report
