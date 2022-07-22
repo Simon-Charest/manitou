@@ -10,7 +10,7 @@ This solution:
 4Which can then be used by solutions such as [Power BI](https://en.wikipedia.org/wiki/Microsoft_Power_BI).
 
 To do:
-- The solution should include a web API access to live data with secure authentication (i.e., OAuth 2.0);
+- The solution should include access to live data and its statistics, through to a web API, with secure authentication (i.e., OAuth 2.0);
 - The solution data should be segregated (i.e. one database per customer) and fully accessible by its owner, in order to comply with the [Act to modernize legislative provisions as regards the protection of personal information](http://assnat.qc.ca/en/travaux-parlementaires/projets-loi/projet-loi-64-42-1.html), which will come into force on 2023-09-22, in the province of Quebec;
 - The solution data should be segregated so that a superuser account is not required to export basic information;
 - The solution should include a reporting module (i.e., Power BI);

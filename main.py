@@ -40,11 +40,10 @@ def convert_to_json(input_pathname, output_directory, encoding=None, ensure_asci
     import os
 
     # Delete output files
-    files = glob.glob(f'{output_directory}/*.json')
-    for file in files:
-        os.remove(file)
+    count = io.remove(f'{output_directory}/*.json')
 
-    print(f'{Fore.RED}Deleted {len(files)} JSON files in {output_directory}.')
+    if verbose:
+        print(f'{Fore.RED}Deleted {count} JSON files in {output_directory}.')
 
     # List input files
     paths = glob.glob(input_pathname)
@@ -75,15 +74,18 @@ def convert_to_json(input_pathname, output_directory, encoding=None, ensure_asci
             json_objects = io.read(file, encoding)
 
             # Append to preexisting data
+            if isinstance(data, dict):
+                data = [data]
+
             data = json_objects + data
 
         # Serialize object to JSON document
         json_string = json.dumps(data, ensure_ascii=ensure_ascii, indent=indent)
 
-        # Append to file
+        # Write to file
         io.write(json_string, file, mode, encoding=encoding)
 
-        if verbose and data:
+        if verbose:
             print(f'{Fore.GREEN}Wrote {length} documents to {file}.')
 
 

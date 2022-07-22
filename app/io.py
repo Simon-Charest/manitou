@@ -14,11 +14,16 @@ def read(file, encoding=None):
     return data
 
 
-def remove(path):
+def remove(pathname):
+    import glob
     import os
 
-    for file in os.scandir(path):
-        os.remove(file.path)
+    paths = glob.glob(pathname)
+
+    for path in paths:
+        os.remove(path)
+
+    return len(paths)
 
 
 def write(object_, file, mode='w', encoding=None):
