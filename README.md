@@ -20,9 +20,8 @@ To do:
 ```mermaid
 flowchart TD
     A[Manitou] -- Daily extraction, at 22 h --> B[XML]
-    B[XML] --> C[JSON]
-    C[JSON] --> D[SQLite]
-    D[SQLite] --> E[Power BI]
+    B[XML] -- This solution --> C[JSON]
+    C[JSON] -- Refresh --> D[Power BI]
 ```
 
 ---
