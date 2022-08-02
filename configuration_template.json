@@ -1,0 +1,16 @@
+{
+  "tenant_id": "",
+  "client_id": "",
+  "object_id": "",
+  "client_secret": "",
+  "application_name": "Manitou Data Converter",
+  "homepage": "https://github.com/Simon-Charest/manitou",
+  "protocol": "MSGraphProtocol",
+  "auth_flow_type": "credentials",
+  "scopes": ["https://graph.microsoft.com/.default"],
+  "scopes.OneDrive": ["Files.Read.All", "Files.ReadWrite.All"],
+  "scopes.SharePoint": ["Sites.Read.All", "Sites.ReadWrite.All"],
+  "scopes.Teams": ["ChannelSettings.Read.All", "Channel.ReadBasic.All", "ChannelSettings.ReadWrite.All",
+    "Group.Read.All", "Directory.Read.All", "Group.ReadWrite.All", "Directory.ReadWrite.All",
+    "ChannelSettings.Read.Group", "ChannelSettings.Edit.Group", "ChannelSettings.ReadWrite.Group"]
+}
