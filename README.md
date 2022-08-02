@@ -83,6 +83,9 @@ flowchart TD
 ## About this solution
 © Simon Charest | [Forensik](https://forensik.ca/) | [In Fidem](https://infidem.biz/) | [Atos](https://atos.net/). All rights reserved.
 
+## Requirements
+- [Python O365](https://github.com/O365/python-o365).
+
 ## About the author
 Mr. Simon Charest, Software Developer and CEO at SLCIT Inc.
 - [Email](mailto:simoncharest@gmail.com);

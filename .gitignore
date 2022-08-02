@@ -133,3 +133,4 @@ dmypy.json
 
 # This solution
 data/
+o365_token.txt
