@@ -12,4 +12,5 @@ python "$($PSScriptRoot)\\bin\\get-pip.py"
 
 # Install requirements
 pip install colorama
+pip install pyodbc
 pip install xmltodict

@@ -7,21 +7,23 @@ This solution:
 1. Expects [XML](https://en.wikipedia.org/wiki/XML) files (i.e., data/input/*.xml), manually extracted from the [Manitou](https://manitousolution.com/application) application (i.e., Log In &rarr; General &rarr; Export data (beta));
 2. Reads the said files;
 3. Converts them to the [JSON](https://en.wikipedia.org/wiki/JSON) data format;
-4Which can then be used by solutions such as [Power BI](https://en.wikipedia.org/wiki/Microsoft_Power_BI).
+4. Imports the data to an [Azure SQL Database](https://en.wikipedia.org/wiki/Microsoft_Azure_SQL_Database);
+5. Which can then be used by solutions such as [Power BI](https://en.wikipedia.org/wiki/Microsoft_Power_BI).
 
 To do:
-- The solution should include access to live data and its statistics, through to a web API, with secure authentication (i.e., OAuth 2.0);
-- The solution data should be segregated (i.e. one database per customer) and fully accessible by its owner, in order to comply with the [Act to modernize legislative provisions as regards the protection of personal information](http://assnat.qc.ca/en/travaux-parlementaires/projets-loi/projet-loi-64-42-1.html), which will come into force on 2023-09-22, in the province of Quebec;
-- The solution data should be segregated so that a superuser account is not required to export basic information;
-- The solution should include a reporting module (i.e., Power BI);
-- The solution data export module must be live (i.e., based on a replication of the production database, via a queuing mechanism), recurring and automatic.
+- Manitou should include access to live data and its statistics, through to a web API, with secure authentication (i.e., OAuth 2.0);
+- Manitou data should be segregated (i.e. one database per customer) and fully accessible by its owner, in order to comply with the [Act to modernize legislative provisions as regards the protection of personal information](http://assnat.qc.ca/en/travaux-parlementaires/projets-loi/projet-loi-64-42-1.html), which will come into force on 2023-09-22, in the province of Quebec;
+- Manitou data should be segregated so that a superuser account is not required to export basic information;
+- Manitou should include a reporting module (i.e., Power BI);
+- Manitou data export module must be automatic, recurring and its data must be live (i.e., based on a replication of the production database, via a queuing mechanism).
 
 ## Flowchart
 ```mermaid
 flowchart TD
     A[Manitou] -- Daily extraction, at 22 h --> B[XML]
-    B[XML] -- This solution --> C[JSON]
-    C[JSON] -- Refresh --> D[Power BI]
+    B[XML] -- Convert --> C[JSON]
+    C[JSON] -- Import --> D[Azure SQL]
+    D[Azure SQL] -- Refresh --> E[Power BI]
 ```
 
 ---
@@ -41,7 +43,7 @@ flowchart TD
 
 ## Convert data using this solution
 1. Run Windows PowerShell;
-2. Execute `python "main.py" --input "data/input/*.xml" --output "data/output" --verbose`.
+2. Execute `python "main.py" --input "data/input/*.xml" --output "data/output" --convert --sql --verbose`.
 
 ## Import data into Power BI
 ### Create new report

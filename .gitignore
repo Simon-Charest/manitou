@@ -132,5 +132,7 @@ dmypy.json
 .idea
 
 # This solution
+conf/*
 data/
 o365_token.txt
+!conf/*_template.json

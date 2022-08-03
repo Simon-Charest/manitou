@@ -1,8 +1,8 @@
 def main():
     from app import io
 
-    configuration_file = 'data/configuration.json'
-    configuration = io.read(configuration_file)
+    o365_configuration_file = 'data/o365.json'
+    configuration = io.read(o365_configuration_file)
     account = connect_to_o365(configuration['client_id'], configuration['client_secret'], configuration['protocol'],
                               configuration['auth_flow_type'], configuration['tenant_id'], configuration['scopes'])
     print(f'Authenticated: {account}')

@@ -1,5 +1,6 @@
 colorama
 O365
 pip
+pyodbc
 setuptools
 xmltodict

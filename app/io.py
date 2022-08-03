@@ -4,6 +4,7 @@ def read(file, encoding=None):
     stream = open(file, encoding=encoding)
 
     if file[-5:] == '.json':
+        # Deserialize JSON document to an object
         data = json.load(stream)
 
     else:

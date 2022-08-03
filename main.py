@@ -1,5 +1,7 @@
 # !/usr/bin/env python
 def main():
+    from app import sql
+
     from colorama import Fore
     import argparse
     import colorama
@@ -14,6 +16,8 @@ def main():
     parser.add_argument('--ensure_ascii', action='store_true', help='Ensure ASCII encoding (default: False)')
     parser.add_argument('--indent', default='\t', help='Indentation (default: \\t)')
     parser.add_argument('--mode', default='w', help='File mode (default: w)')
+    parser.add_argument('--convert', action='store_true', help='Convert data from XML to JSON (default: False)')
+    parser.add_argument('--sql', action='store_true', help='Import JSON data to Azure SQL database (default: False)')
     parser.add_argument('--verbose', action='store_true', help='Verbose (default: False)')
     arguments = parser.parse_args()
 
@@ -21,11 +25,14 @@ def main():
     colorama.init()
 
     # Convert XML data to JSON
-    convert_to_json(arguments.input, arguments.output, arguments.encoding, arguments.ensure_ascii, arguments.indent,
-                    arguments.mode, arguments.verbose)
+    if arguments.convert:
+        convert_to_json(arguments.input, arguments.output, arguments.encoding, arguments.ensure_ascii, arguments.indent,
+                        arguments.mode, arguments.verbose)
 
-    # Convert XML data to SQLite
-    # convert_to_sqlite(arguments.input, 'data/output/db.sqlite')
+    # Import JSON files in Azure SQL database
+    if arguments.sql:
+        sql.import_json_in_azure_sql(arguments.output, 'conf/sql.json', encoding=arguments.encoding,
+                                     ensure_ascii=arguments.ensure_ascii, verbose=arguments.verbose)
 
     if arguments.verbose:
         print(f'{Fore.GREEN}** DONE **')

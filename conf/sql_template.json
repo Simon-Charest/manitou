@@ -1,0 +1,12 @@
+{
+  "server": "localhost",
+  "uid": "sa",
+  "pwd": "",
+  "database": "master",
+  "port": 1433,
+  "driver": "{ODBC Driver 17 for SQL Server}",
+  "protocol": "tcp",
+  "persist_security_info": false,
+  "multiple_active_result_sets": false,
+  "connection_timeout": 30
+}
