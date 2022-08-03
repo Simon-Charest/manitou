@@ -7,7 +7,7 @@ This solution:
 1. Expects [XML](https://en.wikipedia.org/wiki/XML) files (i.e., data/input/*.xml), manually extracted from the [Manitou](https://manitousolution.com/application) application (i.e., Log In &rarr; General &rarr; Export data (beta));
 2. Reads the said files;
 3. Converts them to the [JSON](https://en.wikipedia.org/wiki/JSON) data format;
-4. Imports the data to an [Azure SQL Database](https://en.wikipedia.org/wiki/Microsoft_Azure_SQL_Database);
+4. Imports the data to [Azure SQL Database](https://en.wikipedia.org/wiki/Microsoft_Azure_SQL_Database);
 5. Which can then be used by solutions such as [Power BI](https://en.wikipedia.org/wiki/Microsoft_Power_BI).
 
 To do:
