@@ -2,6 +2,54 @@ from sqlite3 import Error
 import sqlite3
 
 
+def import_json_in_sqlite(input_pathname, output_db_file, encoding='utf-8', column='value', datatype='text',
+                          ensure_ascii=False):
+    from app import io, xml
+    import glob
+    import convert
+
+    # Connect to database
+    connection = create_connection(output_db_file)
+
+    # Get all table names
+    tables = get_tables(connection)
+
+    # For each table...
+    for table in tables:
+        # Empty table
+        delete(connection, table)
+
+    # List files
+    paths = glob.glob(input_pathname)
+
+    # For each file...
+    for path in paths:
+        # Read file
+        string = io.read(path, encoding)
+
+        # Extract table name and data
+        table, data = xml.parse(string, encoding)
+
+        # Create table
+        create_table(connection, table, column, datatype)
+
+        # If data are present...
+        if data:
+            # For each dictionary in list...
+            for datum in data:
+                # Serialize object to JSON formatted string
+                json_string = json.dumps(datum, ensure_ascii=ensure_ascii)
+
+                # Insert data into database
+                insert(connection, table, column, json_string)
+
+            # Commit changes
+            connection.commit()
+
+    # Disconnect from database
+    connection.close()
+
+
 def create_connection(db_file):
     connection = None
 
