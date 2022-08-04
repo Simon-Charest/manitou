@@ -139,7 +139,7 @@ The data will be imported, as JSON, into the "value" field, of the following tab
 - summaryDayEmployees;
 - timeMoneyAdjustments.
 
-Here is an example of a query allowing you to use the data, in [Microsoft SQL Server Management Studio](https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms):
+Here is an example of a query allowing you to use the data, in [SQL Server Management Studio](https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms):
 ```sql
 SELECT DISTINCT JSON_VALUE(e.value, '$.employeeId') AS employeeId
     , JSON_VALUE(e.value, '$.name') AS name
@@ -195,7 +195,21 @@ ORDER BY name ASC
 © Simon Charest | [Forensik](https://forensik.ca/) | [In Fidem](https://infidem.biz/) | [Atos](https://atos.net/). All rights reserved.
 
 ## Requirements
-- [Python O365](https://github.com/O365/python-o365).
+- [Azure SQL Database](https://en.wikipedia.org/wiki/Microsoft_Azure_SQL_Database);
+- [Git](https://git-scm.com/) (optional);
+- [GitHub](https://github.com/) (optional);
+- [Manitou](https://manitousolution.com/application/);
+- [SQL Server Management Studio](https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms) (optional);
+- [Power BI](https://en.wikipedia.org/wiki/Microsoft_Power_BI) (optional);
+- [PowerShell](https://en.wikipedia.org/wiki/PowerShell);
+- [PyCharm](https://www.jetbrains.com/pycharm/) (optional);
+- [Python](https://www.python.org/);
+  - [colorama](https://pypi.org/project/colorama/);
+  - [pip](https://pypi.org/project/pip/);
+  - [pyodbc](https://pypi.org/project/pyodbc/);
+  - [Python O365](https://github.com/O365/python-o365);
+  - [setuptools](https://pypi.org/project/setuptools/);
+  - [xmltodict](https://pypi.org/project/xmltodict/).
 
 ## About the author
 Mr. Simon Charest, Software Developer and CEO at SLCIT Inc.
