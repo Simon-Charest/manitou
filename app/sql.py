@@ -1,4 +1,5 @@
-def import_json_in_azure_sql(json_directory, sql_configuration, encoding=None, ensure_ascii=True, verbose=False):
+def import_json_in_azure_sql(json_directory, sql_configuration, encoding=None, ensure_ascii=True, verbose=False,
+                             test=False):
     from app import io
     from colorama import Fore
     from pathlib import Path
@@ -20,6 +21,9 @@ def import_json_in_azure_sql(json_directory, sql_configuration, encoding=None, e
                                    sql_configuration['connection_timeout'])
     cursor = None
 
+    if verbose:
+        print(f'{Fore.YELLOW}Importing JSON data to {len(paths)} tables in Azure SQL Database...')
+
     for path in paths:
         # Create table
         table_name = Path(path).stem
@@ -30,38 +34,34 @@ def import_json_in_azure_sql(json_directory, sql_configuration, encoding=None, e
                 value NVARCHAR(MAX)
             )
         """
-        cursor = execute(connection, sql)
-        connection.commit()
+        if not test:
+            cursor = execute(connection, sql)
+            connection.commit()
 
-        # Empty table
-        delete(connection, table_name)
-
-        if verbose:
-            print(f'{Fore.GREEN}Table {table_name} created and emptied.')
+            # Empty table
+            delete(connection, table_name)
 
         # Read JSON data
         data = io.read(path, encoding=encoding)
 
-        if verbose:
-            print(f'{Fore.YELLOW}Importing {len(data)} documents to {table_name}...')
-
+        # For each object in JSON document...
         for datum in data:
             # Serialize object to a JSON document
             value = json.dumps(datum, ensure_ascii=ensure_ascii).replace("'", "''")
 
             # Insert JSON data into corresponding table
-            sql = f"INSERT INTO {table_name} (value) VALUES('{value}')"
-
-            try:
+            if not test:
+                sql = f"INSERT INTO {table_name} (value) VALUES('{value}')"
                 cursor = execute(connection, sql)
 
-            except Exception as exception:
-                print(exception)
-                print(sql)
+        if not test:
+            connection.commit()
 
-        connection.commit()
+        if verbose:
+            print(f'{Fore.GREEN}Imported {len(data)} documents to {table_name}.')
 
-    close([cursor, connection])
+    if not test:
+        close(cursor)
 
 
 def connect_azure_sql(server='localhost', uid='sa', pwd=None, database='master', port=1433,

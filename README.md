@@ -41,9 +41,118 @@ flowchart TD
 5. Click on the corresponding Consult button (paperclip icon) to download the archive;
 6. Right-click the archive &rarr; Extract All... &rarr; Select a destination folder (i.e., `C:\temp\manitou\data\input`) &rarr; Extract;
 
-## Convert data using this solution
+## Convert and import data using this solution
 1. Run Windows PowerShell;
-2. Execute `python "main.py" --input "data/input/*.xml" --output "data/output" --convert --sql --verbose`.
+2. Execute `python "mdc.py" --input "data/input/*.xml" --output "data/output" --convert --sql --verbose`.
+
+Execution example:
+```powershell
+Deleted 15 JSON files in data/output.
+Found 35 XML files in data/input.
+Wrote 235 documents to data/output/absences.json.
+Wrote 189 documents to data/output/absences.json.
+Wrote 1997 documents to data/output/projectActivities.json.
+Wrote 4392 documents to data/output/projectActivities.json.
+Wrote 7215 documents to data/output/timeMoneyAdjustments.json.
+Wrote 41472 documents to data/output/timeMoneyAdjustments.json.
+Wrote 391 documents to data/output/projectAssignments.json.
+Wrote 9423 documents to data/output/projectAssignments.json.
+Wrote 476 documents to data/output/projectDeliverables.json.
+Wrote 953 documents to data/output/projectDeliverables.json.
+Wrote 2897 documents to data/output/CRMAccounts.json.
+Wrote 3362 documents to data/output/CRMAccounts.json.
+Wrote 115 documents to data/output/employees.json.
+Wrote 215 documents to data/output/employees.json.
+Wrote 215 documents to data/output/employeeSalaries.json.
+Wrote 425 documents to data/output/employeeSalaries.json.
+Wrote 11 documents to data/output/projects.json.
+Wrote 571 documents to data/output/projects.json.
+Wrote 1015 documents to data/output/projects.json.
+Wrote 0 documents to data/output/projectContracts.json.
+Wrote 657 documents to data/output/projectContracts.json.
+Wrote 1236 documents to data/output/projectContracts.json.
+Wrote 84 documents to data/output/billedIncomes.json.
+Wrote 133 documents to data/output/billedIncomes.json.
+Wrote 481 documents to data/output/summaryDayAssignments.json.
+Wrote 4842 documents to data/output/summaryDayAssignments.json.
+Wrote 2855 documents to data/output/summaryDayEmployees.json.
+Wrote 4396 documents to data/output/summaryDayEmployees.json.
+Wrote 117 documents to data/output/subcontractors.json.
+Wrote 129 documents to data/output/subcontractors.json.
+Wrote 191 documents to data/output/subcontractors.json.
+Wrote 225 documents to data/output/billedIncomes.json.
+Wrote 238 documents to data/output/billedIncomes.json.
+Wrote 13 documents to data/output/activitiesTransfer.json.
+Wrote 653 documents to data/output/activitiesTransfer.json.
+Importing JSON data to 15 tables in Azure SQL Database...
+Imported 424 documents to absences.
+Imported 666 documents to activitiesTransfer.
+Imported 680 documents to billedIncomes.
+Imported 6259 documents to CRMAccounts.
+Imported 330 documents to employees.
+Imported 640 documents to employeeSalaries.
+Imported 6389 documents to projectActivities.
+Imported 9814 documents to projectAssignments.
+Imported 1893 documents to projectContracts.
+Imported 1429 documents to projectDeliverables.
+Imported 1597 documents to projects.
+Imported 437 documents to subcontractors.
+Imported 5323 documents to summaryDayAssignments.
+Imported 7251 documents to summaryDayEmployees.
+Imported 48687 documents to timeMoneyAdjustments.
+** DONE **
+```
+
+For help, use: `python "mdc.py" --help`.
+```powershell
+usage: mdc.py [-h] [--input INPUT] [--output OUTPUT] [--encoding ENCODING] [--ensure_ascii] [--indent INDENT] [--mode MODE]
+              [--convert] [--sql] [--verbose] [--test]
+
+options:
+  -h, --help           show this help message and exit
+  --input INPUT        Input pathname (default: data/input/*.xml)
+  --output OUTPUT      Output directory (default: data/output)
+  --encoding ENCODING  File encoding (default: utf-8)
+  --ensure_ascii       Ensure ASCII encoding (default: False)
+  --indent INDENT      Indentation (default: \t)
+  --mode MODE          File mode (default: w)
+  --convert            Convert data from XML to JSON (default: False)
+  --sql                Import JSON data to Azure SQL database (default: False)
+  --verbose            Verbose (default: False)
+  --test               Skip import process (default: False)
+```
+
+The data will be imported, as JSON, into the "value" field, of the following tables, in a database named "manitoudb", in an Azure SQL Database instance.
+- absences;
+- activitiesTransfer;
+- billedIncomes;
+- CRMAccounts;
+- employees;
+- employeeSalaries;
+- projectActivities;
+- projectAssignments;
+- projectContracts;
+- projectDeliverables;
+- projects;
+- subcontractors;
+- summaryDayAssignments;
+- summaryDayEmployees;
+- timeMoneyAdjustments.
+
+Here is an example of a query allowing you to use the data, in [Microsoft SQL Server Management Studio](https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms):
+```sql
+SELECT DISTINCT JSON_VALUE(e.value, '$.employeeId') AS employeeId
+    , JSON_VALUE(e.value, '$.name') AS name
+    , JSON_VALUE(e.value, '$.firstName') AS firstName
+    , JSON_VALUE(e.value, '$.hireDate') AS hireDate
+    , JSON_VALUE(e.value, '$.employementEndDate') AS employementEndDate
+FROM employees AS e
+WHERE JSON_VALUE(e.value, '$.employementEndDate') IS NULL
+    AND JSON_VALUE(e.value, '$.email') LIKE '%@forensik.ca'
+ORDER BY name ASC
+    , firstName ASC
+;
+```
 
 ## Import data into Power BI
 ### Create new report

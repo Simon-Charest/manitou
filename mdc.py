@@ -19,6 +19,7 @@ def main():
     parser.add_argument('--convert', action='store_true', help='Convert data from XML to JSON (default: False)')
     parser.add_argument('--sql', action='store_true', help='Import JSON data to Azure SQL database (default: False)')
     parser.add_argument('--verbose', action='store_true', help='Verbose (default: False)')
+    parser.add_argument('--test', action='store_true', help='Skip import process (default: False)')
     arguments = parser.parse_args()
 
     # Initialise colorama
@@ -32,7 +33,8 @@ def main():
     # Import JSON files in Azure SQL database
     if arguments.sql:
         sql.import_json_in_azure_sql(arguments.output, 'conf/sql.json', encoding=arguments.encoding,
-                                     ensure_ascii=arguments.ensure_ascii, verbose=arguments.verbose)
+                                     ensure_ascii=arguments.ensure_ascii, verbose=arguments.verbose,
+                                     test=arguments.test)
 
     if arguments.verbose:
         print(f'{Fore.GREEN}** DONE **')
