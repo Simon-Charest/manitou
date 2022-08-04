@@ -22,7 +22,7 @@ To do:
 flowchart TD
     A[Manitou] -- Daily extraction, at 22 h --> B[XML]
     B[XML] -- Convert --> C[JSON]
-    C[JSON] -- Import --> D[Azure SQL]
+    C[JSON] -- Import --> D[Azure SQL Database]
     D[Azure SQL] -- Refresh --> E[Power BI]
 ```
 
