@@ -71,7 +71,7 @@ def import_json_in_azure(json_directory, sql_configuration, encoding=None, ensur
         print(f"{Fore.YELLOW}Creating columns and indexes...")
 
     # Read index data
-    indexes = io.read('data/indexes.json', encoding=encoding)
+    indexes = io.read('conf/indexes.json', encoding=encoding)
     prefix = 'index'
 
     for index in indexes:

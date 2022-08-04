@@ -1,0 +1,62 @@
+[
+  {"table": "absences", "column": "absenceId"},
+  {"table": "absences", "column": "absenceRequestId"},
+  {"table": "absences", "column": "employeeId"},
+
+  {"table": "activitiesTransfer", "column": "employeeId"},
+  {"table": "activitiesTransfer", "column": "fromActivityId"},
+  {"table": "activitiesTransfer", "column": "fromAssignmentId"},
+  {"table": "activitiesTransfer", "column": "toActivityId"},
+  {"table": "activitiesTransfer", "column": "toAssignmentId"},
+
+  {"table": "billedIncomes", "column": "contractId"},
+  {"table": "billedIncomes", "column": "projectId"},
+  {"table": "billedIncomes", "column": "WiPABemployeeId"},
+
+  {"table": "CRMAccounts", "column": "accountId"},
+  {"table": "CRMAccounts", "column": "responsibleEmployeeId"},
+  {"table": "CRMAccounts", "column": "accountId"},
+
+  {"table": "employees", "column": "employeeId"},
+  {"table": "employees", "column": "managerEmployeeId"},
+
+  {"table": "employeeSalaries", "column": "employeeId"},
+
+  {"table": "projectActivities", "column": "activityId"},
+  {"table": "projectActivities", "column": "deliverableId"},
+  {"table": "projectActivities", "column": "projectId"},
+
+  {"table": "projectAssignments", "column": "activityId"},
+  {"table": "projectAssignments", "column": "assignmentId"},
+  {"table": "projectAssignments", "column": "employeeId"},
+  {"table": "projectAssignments", "column": "projectId"},
+
+  {"table": "projectContracts", "column": "accountId"},
+  {"table": "projectContracts", "column": "contractId"},
+  {"table": "projectContracts", "column": "projectId"},
+
+  {"table": "projectDeliverables", "column": "contractId"},
+  {"table": "projectDeliverables", "column": "deliverableId"},
+  {"table": "projectDeliverables", "column": "projectId"},
+  {"table": "projectDeliverables", "column": "responsibleEmployeeId"},
+
+  {"table": "projects", "column": "endAccountId"},
+  {"table": "projects", "column": "invoicingResponsibleEmployeeId"},
+  {"table": "projects", "column": "projectAccountId"},
+  {"table": "projects", "column": "projectId"},
+  {"table": "projects", "column": "employeeId"},
+  {"table": "projects", "column": "projectManagerEmployeeId"},
+  {"table": "projects", "column": "projectResponsibleEmployeeId"},
+
+  {"table": "subcontractors", "column": "employeeId"},
+  {"table": "subcontractors", "column": "managerEmployeeId"},
+  {"table": "subcontractors", "column": "employeeId"},
+
+  {"table": "summaryDayAssignments", "column": "activityId"},
+  {"table": "summaryDayAssignments", "column": "employeeId"},
+  {"table": "summaryDayAssignments", "column": "projectId"},
+  {"table": "summaryDayEmployees", "column": "employeeId"},
+
+  {"table": "timeMoneyAdjustments", "column": "activityId"},
+  {"table": "timeMoneyAdjustments", "column": "employeeId"}
+]

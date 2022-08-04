@@ -136,3 +136,4 @@ conf/*
 data/
 o365_token.txt
 !conf/*_template.json
+!conf/indexes.json
