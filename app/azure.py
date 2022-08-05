@@ -1,5 +1,7 @@
 def import_json_in_azure(json_directory, sql_configuration, encoding=None, ensure_ascii=True, verbose=False,
                          test=False):
+    # Microsoft Azure (https://portal.azure.com)
+
     from app import io
     from colorama import Fore
     from pathlib import Path
@@ -19,7 +21,6 @@ def import_json_in_azure(json_directory, sql_configuration, encoding=None, ensur
                                    sql_configuration['persist_security_info'],
                                    sql_configuration['multiple_active_result_sets'],
                                    sql_configuration['connection_timeout'])
-    cursor = None
 
     if verbose:
         print(f'{Fore.YELLOW}Importing JSON data to {len(paths)} tables in Azure SQL Database...')
@@ -118,9 +119,9 @@ def connect_azure_sql(server='localhost', uid='sa', pwd=None, database='master',
                       multiple_active_result_sets=False, connection_timeout=30):
     import pyodbc
 
-    p_str = f'Server={protocol}:{server};port={port};Database={database};UID={uid};Pwd={pwd};' \
-            f'Driver={driver};Persist Security Info={persist_security_info};' \
-            f'MultipleActiveResultSets={multiple_active_result_sets};Connection Timeout={connection_timeout};'
+    p_str = f'''Server={protocol}:{server};port={port};Database={database};UID={uid};Pwd={pwd};Driver={driver};
+    Persist Security Info={persist_security_info};MultipleActiveResultSets={multiple_active_result_sets};
+    Connection Timeout={connection_timeout};'''
 
     return pyodbc.connect(p_str)
 

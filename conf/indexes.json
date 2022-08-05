@@ -44,7 +44,6 @@
   {"table": "projects", "column": "invoicingResponsibleEmployeeId"},
   {"table": "projects", "column": "projectAccountId"},
   {"table": "projects", "column": "projectId"},
-  {"table": "projects", "column": "employeeId"},
   {"table": "projects", "column": "projectManagerEmployeeId"},
   {"table": "projects", "column": "projectResponsibleEmployeeId"},
 
