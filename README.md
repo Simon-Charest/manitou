@@ -31,7 +31,8 @@ flowchart TD
 ## Install this solution
 1. Download and extract the project from [GitHub](https://github.com/Simon-Charest/manitou) (e.g., Code &rarr; Download ZIP &rarr; go to This PC &rarr; Downloads &rarr; select file &rarr; context menu &rarr; Extract All... to `C:\temp\manitou`);
 2. Run Windows PowerShell as an administrator;
-3. Execute: `& "C:\temp\manitou\install.ps1"`.
+3. Execute: `& "C:\temp\manitou\install.ps1"`;
+4. Copy `"conf/sql_template.json"` to `"conf/sql.json"` and contact your system administrator for assistance in completing the Azure SQL Database configuration.
 
 ## Export data from Manitou
 1. Log in to [Manitou](https://manitousolution.com/application), with a superuser account;
