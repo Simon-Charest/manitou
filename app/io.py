@@ -1,3 +1,10 @@
+import datetime
+
+
+def print_colored(string, foreground_color=None, fmt='%Y-%m-%d %H:%M:%S'):
+    print(f'{foreground_color}[{datetime.datetime.now().strftime(fmt)}] {string}')
+
+
 def read(file, encoding=None):
     import json
 
@@ -15,11 +22,8 @@ def read(file, encoding=None):
     return data
 
 
-def remove(pathname):
-    import glob
+def remove(paths):
     import os
-
-    paths = glob.glob(pathname)
 
     for path in paths:
         os.remove(path)

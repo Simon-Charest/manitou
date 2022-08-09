@@ -1,6 +1,6 @@
 # !/usr/bin/env python
 def main():
-    from app import azure, convert
+    from app import azure, convert, io
 
     from colorama import Fore
     import argparse
@@ -28,7 +28,7 @@ def main():
     # Convert XML data to JSON
     if arguments.convert:
         convert.convert_to_json(arguments.input, arguments.output, arguments.encoding, arguments.ensure_ascii,
-                                arguments.indent, arguments.mode, arguments.verbose)
+                                arguments.indent, arguments.mode, arguments.verbose, test=arguments.test)
 
     # Import JSON files in Azure SQL database
     if arguments.sql:
@@ -36,7 +36,7 @@ def main():
                                    ensure_ascii=arguments.ensure_ascii, verbose=arguments.verbose, test=arguments.test)
 
     if arguments.verbose:
-        print(f'{Fore.GREEN}** DONE **')
+        io.print_colored('** DONE **', Fore.GREEN)
 
 
 if __name__ == '__main__':

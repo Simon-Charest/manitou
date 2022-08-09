@@ -1,5 +1,5 @@
 def convert_to_json(input_pathname, output_directory, encoding=None, ensure_ascii=False, indent=None, mode='w',
-                    verbose=False):
+                    verbose=False, test=False):
     from app import io, xml
     from colorama import Fore
     import glob
@@ -7,16 +7,19 @@ def convert_to_json(input_pathname, output_directory, encoding=None, ensure_asci
     import os
 
     # Delete output files
-    count = io.remove(f'{output_directory}/*.json')
+    paths = glob.glob(f'{output_directory}/*.json')
+
+    if not test:
+        io.remove(paths)
 
     if verbose:
-        print(f'{Fore.RED}Deleted {count} JSON files in {output_directory}.')
+        io.print_colored(f'Deleted {len(paths)} JSON files in {output_directory}.', Fore.RED)
 
     # List input files
     paths = glob.glob(input_pathname)
 
     if verbose:
-        print(f'{Fore.YELLOW}Found {len(paths)} XML files in {os.path.dirname(input_pathname)}.')
+        io.print_colored(f'Found {len(paths)} XML files in {os.path.dirname(input_pathname)}.', Fore.YELLOW)
 
     # For each file...
     for path in paths:
@@ -50,7 +53,8 @@ def convert_to_json(input_pathname, output_directory, encoding=None, ensure_asci
         json_string = json.dumps(data, ensure_ascii=ensure_ascii, indent=indent)
 
         # Write to file
-        io.write(json_string, file, mode, encoding=encoding)
+        if not test:
+            io.write(json_string, file, mode, encoding=encoding)
 
         if verbose:
-            print(f'{Fore.GREEN}Wrote {length} documents to {file}.')
+            io.print_colored(f'Wrote {length} documents to {file}.', Fore.GREEN)

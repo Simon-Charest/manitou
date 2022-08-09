@@ -6,7 +6,6 @@ def import_json_in_azure(json_directory, sql_configuration, encoding=None, ensur
     from colorama import Fore
     from pathlib import Path
     import glob
-    import json
 
     # List JSON files
     paths = glob.glob(f'{json_directory}/*.json')
@@ -23,11 +22,26 @@ def import_json_in_azure(json_directory, sql_configuration, encoding=None, ensur
                                    sql_configuration['connection_timeout'])
 
     if verbose:
-        print(f'{Fore.YELLOW}Importing JSON data to {len(paths)} tables in Azure SQL Database...')
+        io.print_colored(f'Importing JSON data to {len(paths)} tables in Azure SQL Database...', Fore.YELLOW)
+
+    table_names = get_table_names(connection)
+    indexes = io.read('conf/indexes.json', encoding=encoding)
+
+    if not test:
+        # Drop tables
+        drop_many(connection, table_names, True)
+
+    if verbose:
+        io.print_colored(f'Dropped {len(table_names)} tables.', Fore.RED)
 
     for path in paths:
+        # Read JSON data
+        data = io.read(path, encoding=encoding)
+
         # Create table
         table_name = Path(path).stem
+        current_indexes = [index.get('column') for index in indexes if index.get('table') == table_name]
+        columns = get_columns(data, current_indexes, True, str.casefold)
         sql = f"""
             IF NOT EXISTS
             (
@@ -36,29 +50,32 @@ def import_json_in_azure(json_directory, sql_configuration, encoding=None, ensur
                 WHERE o.name = '{table_name}'
                     AND o.type = 'U'
             )
-                CREATE TABLE {table_name} (value NVARCHAR(MAX))
+                CREATE TABLE {table_name}
+                (
+                    {columns}
+                )
         """
+
         if not test:
-            execute(connection, sql)
-            connection.commit()
-
-            # Empty table
-            delete(connection, table_name)
-
-        # Read JSON data
-        data = io.read(path, encoding=encoding)
+            execute(connection, sql, True)
 
         # For each object in JSON document...
         for datum in data:
-            # Serialize object to a JSON document
-            value = json.dumps(datum, ensure_ascii=ensure_ascii).replace("'", "''")
+            values = get_values(datum.values(), ensure_ascii)
 
             # Insert JSON data into corresponding table
             if not test:
+                column_names = get_column_names(datum.keys())
                 sql = f"""
                     INSERT
-                    INTO {table_name} (value)
-                    VALUES ('{value}')
+                    INTO {table_name}
+                    (
+                        {column_names}
+                    )
+                    VALUES
+                    (
+                        {values}
+                    )
                 """
                 execute(connection, sql)
 
@@ -66,32 +83,14 @@ def import_json_in_azure(json_directory, sql_configuration, encoding=None, ensur
             connection.commit()
 
         if verbose:
-            print(f'{Fore.GREEN}Imported {len(data)} documents to {table_name}.')
+            io.print_colored(f'Imported {len(data)} documents to {table_name}.', Fore.GREEN)
 
     if verbose:
-        print(f"{Fore.YELLOW}Creating columns and indexes...")
+        io.print_colored('Creating columns and indexes...', Fore.YELLOW)
 
-    # Read index data
-    indexes = io.read('conf/indexes.json', encoding=encoding)
     prefix = 'index'
 
     for index in indexes:
-        if not test:
-            # Create column
-            sql = f"""
-                IF NOT EXISTS
-                (
-                    SELECT 1
-                    FROM sys.columns AS c
-                    WHERE c.name = '{index['column']}'
-                        AND c.object_id = OBJECT_ID('{index['table']}')
-                )
-                    ALTER TABLE {index['table']}
-                        ADD {index['column']} AS JSON_VALUE(value, '$.{index['column']}')
-            """
-            execute(connection, sql)
-            connection.commit()
-
         # Create index
         index_name = f"{prefix}_{index['table']}_{index['column']}"
 
@@ -99,17 +98,18 @@ def import_json_in_azure(json_directory, sql_configuration, encoding=None, ensur
             sql = f"""
                 IF NOT EXISTS
                 (
-                    SELECT 1 FROM sys.indexes AS i WHERE i.name = '{index_name}'
+                    SELECT 1
+                    FROM sys.indexes AS i
+                    WHERE i.name = '{index_name}'
                         AND i.object_id = OBJECT_ID('{index['table']}')
                 )
                     CREATE INDEX {index_name}
                         ON {index['table']} ({index['column']})
             """
-            execute(connection, sql)
-            connection.commit()
+            execute(connection, sql, True)
 
         if verbose:
-            print(f"{Fore.GREEN}Created {index_name} on {index['table']}.{index['column']}.")
+            io.print_colored(f"Created {index_name} on {index['table']}.{index['column']}.", Fore.GREEN)
 
     connection.close()
 
@@ -126,15 +126,92 @@ def connect_azure_sql(server='localhost', uid='sa', pwd=None, database='master',
     return pyodbc.connect(p_str)
 
 
-def delete(connection, table_name):
+def delete(connection, table_name, commit=False):
     cursor = connection.cursor()
     sql = f'DELETE FROM {table_name}'
     cursor.execute(sql)
 
+    if commit:
+        connection.commit()
 
-def execute(connection, sql):
+
+def get_columns(data, indexes, sort=False, key=None):
+    keys = set()
+
+    for datum in data:
+        keys |= set(datum.keys())
+
+    if sort:
+        keys = sorted(keys, key=key)
+
+    return ', '.join([f'{key} NVARCHAR(900)\n' if key in indexes else f'{key} NVARCHAR(MAX)\n' for key in keys])
+
+
+def get_column_names(keys):
+    return ', '.join([f'{key}\n' for key in keys])
+
+
+def get_values(values, ensure_ascii=False):
+    old = "'"
+    new = "''"
+
+    return ', '.join([f"'{try_replace(get_string(value, ensure_ascii), old, new)}'\n" for value in values])
+
+
+def try_replace(object_, old, new):
+    if object_:
+        return object_.replace(old, new)
+
+    return object_
+
+
+def get_string(obj, ensure_ascii=False):
+    import json
+
+    if isinstance(obj, dict):
+        # Serialize object to a JSON document
+        return json.dumps(obj, ensure_ascii=ensure_ascii)
+
+    return obj
+
+
+def get_table_names(connection):
+    cursor = connection.cursor()
+    sql = """
+        SELECT table_name
+        FROM information_schema.tables
+        WHERE table_type = 'base table'
+    """
+    cursor.execute(sql)
+    table_names = [table_name[0] for table_name in cursor]
+
+    return table_names
+
+
+def drop_many(connection, table_names, commit=False):
+    for table_name in table_names:
+        drop(connection, table_name)
+
+    if commit:
+        connection.commit()
+
+
+def drop(connection, table_name, commit=False):
+    cursor = connection.cursor()
+
+    sql = f'DROP TABLE {table_name}'
+    cursor.execute(sql)
+
+    if commit:
+        connection.commit()
+
+
+def execute(connection, sql, commit=False):
     cursor = connection.cursor()
     cursor.execute(sql)
+
+    if commit:
+        connection.commit()
 
     return cursor
 
