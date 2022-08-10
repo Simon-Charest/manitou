@@ -191,46 +191,46 @@ The data will be imported, as JSON, into the "value" field, of the following tab
 Here are examples of queries allowing the exploitation of data, in [SQL Server Management Studio](https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms):
 ```sql
 -- Employees
-SELECT DISTINCT JSON_VALUE(e.value, '$.employeeId') AS employeeId
-  , JSON_VALUE(e.value, '$.statusEN') AS statusEN
-  , JSON_VALUE(e.value, '$.name') AS name
-  , JSON_VALUE(e.value, '$.firstName') AS firstName
-  , JSON_VALUE(e.value, '$.sexEN') AS sexEN
-  , JSON_VALUE(e.value, '$.languageEN') AS languageEN
-  , JSON_VALUE(e.value, '$.email') AS email
-  , JSON_VALUE(e.value, '$.countryOfOriginEN') AS countryOfOriginEN
-  , JSON_VALUE(e.value, '$.birthDate') AS birthDate
-  , JSON_VALUE(e.value, '$.hireDate') AS hireDate
-  , JSON_VALUE(e.value, '$.employementEndDate') AS employementEndDate
-  , JSON_VALUE(e.value, '$.workplaceEN') AS workplaceEN
-  , JSON_VALUE(e.value, '$.positions.position.positionEN') AS positionEN
+SELECT DISTINCT e.employeeId
+  , e.statusEN
+  , e.name
+  , e.firstName
+  , e.sexEN
+  , e.languageEN
+  , e.email
+  , e.countryOfOriginEN
+  , e.birthDate
+  , e.hireDate
+  , e.employementEndDate
+  , e.workplaceEN
+  , JSON_VALUE(e.positions, '$.positionEN') AS positionEN
 FROM employees AS e
-WHERE JSON_VALUE(e.value, '$.statusEN') = 'Active'
-  AND JSON_VALUE(e.value, '$.employementEndDate') IS NULL
-  AND JSON_VALUE(e.value, '$.email') LIKE '%@forensik.ca'
-ORDER BY name ASC
-  , firstName ASC
+WHERE e.statusEN = 'Active'
+  AND e.employementEndDate IS NULL
+  AND e.email LIKE '%@forensik.ca'
+ORDER BY e.name ASC
+  , e.firstName ASC
 ;
 ```
 
 ```sql
 -- Projects
-SELECT DISTINCT JSON_VALUE(p.value, '$.projectId') AS projectId
-  , JSON_VALUE(p.value, '$.projectTitle') AS projectTitle
-  , JSON_VALUE(p.value, '$.startDate') AS startDate
-  , JSON_VALUE(p.value, '$.expectedEndDate') AS expectedEndDate
-  , JSON_VALUE(p.value, '$.endDate') AS endDate
-  , JSON_VALUE(p.value, '$.statusEN') AS statusEN
-  , JSON_VALUE(e.value, '$.name') AS name
-  , JSON_VALUE(e.value, '$.firstName') AS firstName
-  , JSON_VALUE(e.value, '$.email') AS email
+SELECT DISTINCT p.projectId
+  , p.projectTitle
+  , p.startDate
+  , p.expectedEndDate
+  , p.endDate
+  , p.statusEN
+  , e.name
+  , e.firstName
+  , e.email
 FROM projects AS p
-  LEFT JOIN employees AS e ON JSON_VALUE(e.value, '$.employeeId') = JSON_VALUE(p.value, '$.projectManagerEmployeeId')
-WHERE JSON_VALUE(p.value, '$.endDate') IS NULL
-  AND JSON_VALUE(p.value, '$.projectTitle') NOT LIKE 'Projet interne%'
-ORDER BY JSON_VALUE(p.value, '$.startDate') ASC
-  , JSON_VALUE(p.value, '$.expectedEndDate') ASC
-  , JSON_VALUE(p.value, '$.projectTitle') ASC
+  LEFT JOIN employees AS e ON e.employeeId = p.projectManagerEmployeeId
+WHERE p.endDate IS NULL
+  AND p.projectTitle NOT LIKE 'Projet interne%'
+ORDER BY p.startDate ASC
+  , p.expectedEndDate ASC
+  , p.projectTitle ASC
 ;
 ```
 
