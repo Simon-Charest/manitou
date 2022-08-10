@@ -5,6 +5,8 @@ SELECT DISTINCT p.projectId
     , p.expectedEndDate
     , p.endDate
     , p.statusEN
+    , e.employeeId
+    , e.employeeInternalNumber
     , e.name
     , e.firstName
     , e.email

@@ -1,5 +1,7 @@
 -- Employees
-SELECT DISTINCT e.employeeId
+SELECT DISTINCT
+    e.employeeId
+    , e.employeeInternalNumber
     , e.statusEN
     , e.name
     , e.firstName

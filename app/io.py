@@ -44,7 +44,7 @@ def get_html_table(rows):
             html_table += f"<td class='{class_}'>"
 
             if column:
-                html_table += column
+                html_table += str(column)
 
             else:
                 html_table += '</td>\n'

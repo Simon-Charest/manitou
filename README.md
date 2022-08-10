@@ -51,125 +51,19 @@ Execution example:
 [2022-08-09 13:21:22] Deleted 15 JSON files in data/output.
 [2022-08-09 13:21:22] Found 35 XML files in data/input.
 [2022-08-09 13:21:22] Wrote 235 documents to data/output/absences.json.
-[2022-08-09 13:21:22] Wrote 189 documents to data/output/absences.json.
-[2022-08-09 13:21:22] Wrote 1997 documents to data/output/projectActivities.json.
-[2022-08-09 13:21:23] Wrote 4392 documents to data/output/projectActivities.json.
-[2022-08-09 13:21:23] Wrote 7215 documents to data/output/timeMoneyAdjustments.json.
-[2022-08-09 13:21:25] Wrote 41472 documents to data/output/timeMoneyAdjustments.json.
-[2022-08-09 13:21:25] Wrote 391 documents to data/output/projectAssignments.json.
-[2022-08-09 13:21:26] Wrote 9423 documents to data/output/projectAssignments.json.
-[2022-08-09 13:21:26] Wrote 476 documents to data/output/projectDeliverables.json.
-[2022-08-09 13:21:26] Wrote 953 documents to data/output/projectDeliverables.json.
-[2022-08-09 13:21:26] Wrote 2897 documents to data/output/CRMAccounts.json.
-[2022-08-09 13:21:26] Wrote 3362 documents to data/output/CRMAccounts.json.
-[2022-08-09 13:21:27] Wrote 115 documents to data/output/employees.json.
-[2022-08-09 13:21:27] Wrote 215 documents to data/output/employees.json.
-[2022-08-09 13:21:27] Wrote 215 documents to data/output/employeeSalaries.json.
-[2022-08-09 13:21:27] Wrote 425 documents to data/output/employeeSalaries.json.
-[2022-08-09 13:21:27] Wrote 11 documents to data/output/projects.json.
-[2022-08-09 13:21:27] Wrote 571 documents to data/output/projects.json.
-[2022-08-09 13:21:27] Wrote 1015 documents to data/output/projects.json.
-[2022-08-09 13:21:27] Wrote 0 documents to data/output/projectContracts.json.
-[2022-08-09 13:21:27] Wrote 657 documents to data/output/projectContracts.json.
-[2022-08-09 13:21:27] Wrote 1236 documents to data/output/projectContracts.json.
-[2022-08-09 13:21:27] Wrote 84 documents to data/output/billedIncomes.json.
-[2022-08-09 13:21:27] Wrote 133 documents to data/output/billedIncomes.json.
-[2022-08-09 13:21:27] Wrote 481 documents to data/output/summaryDayAssignments.json.
-[2022-08-09 13:21:28] Wrote 4842 documents to data/output/summaryDayAssignments.json.
-[2022-08-09 13:21:28] Wrote 2855 documents to data/output/summaryDayEmployees.json.
-[2022-08-09 13:21:29] Wrote 4396 documents to data/output/summaryDayEmployees.json.
-[2022-08-09 13:21:29] Wrote 117 documents to data/output/subcontractors.json.
-[2022-08-09 13:21:29] Wrote 129 documents to data/output/subcontractors.json.
-[2022-08-09 13:21:29] Wrote 191 documents to data/output/subcontractors.json.
-[2022-08-09 13:21:29] Wrote 225 documents to data/output/billedIncomes.json.
-[2022-08-09 13:21:29] Wrote 238 documents to data/output/billedIncomes.json.
-[2022-08-09 13:21:29] Wrote 13 documents to data/output/activitiesTransfer.json.
-[2022-08-09 13:21:29] Wrote 653 documents to data/output/activitiesTransfer.json.
+[...]
 [2022-08-09 13:21:30] Importing JSON data to 15 tables in Azure SQL Database...
 [2022-08-09 13:21:30] Dropped 3 tables.
 [2022-08-09 13:21:40] Imported 424 documents to absences.
-[2022-08-09 13:21:56] Imported 666 documents to activitiesTransfer.
-[2022-08-09 13:22:15] Imported 680 documents to billedIncomes.
-[2022-08-09 13:24:50] Imported 6259 documents to CRMAccounts.
-[2022-08-09 13:24:59] Imported 330 documents to employees.
-[2022-08-09 13:25:14] Imported 640 documents to employeeSalaries.
-[2022-08-09 13:27:50] Imported 6389 documents to projectActivities.
-[2022-08-09 13:31:50] Imported 9814 documents to projectAssignments.
-[2022-08-09 13:32:35] Imported 1893 documents to projectContracts.
-[2022-08-09 13:33:10] Imported 1429 documents to projectDeliverables.
-[2022-08-09 13:33:51] Imported 1597 documents to projects.
-[2022-08-09 13:34:03] Imported 437 documents to subcontractors.
-[2022-08-09 13:36:17] Imported 5323 documents to summaryDayAssignments.
-[2022-08-09 13:39:19] Imported 7251 documents to summaryDayEmployees.
-[2022-08-09 13:59:16] Imported 48687 documents to timeMoneyAdjustments.
+[...]
 [2022-08-09 13:59:16] Creating columns and indexes...
 [2022-08-09 13:59:16] Created index_absences_absenceId on absences.absenceId.
-[2022-08-09 13:59:16] Created index_absences_absenceRequestId on absences.absenceRequestId.
-[2022-08-09 13:59:16] Created index_absences_employeeId on absences.employeeId.
-[2022-08-09 13:59:16] Created index_activitiesTransfer_employeeId on activitiesTransfer.employeeId.
-[2022-08-09 13:59:16] Created index_activitiesTransfer_fromActivityId on activitiesTransfer.fromActivityId.
-[2022-08-09 13:59:16] Created index_activitiesTransfer_fromAssignmentId on activitiesTransfer.fromAssignmentId.
-[2022-08-09 13:59:17] Created index_activitiesTransfer_toActivityId on activitiesTransfer.toActivityId.
-[2022-08-09 13:59:17] Created index_activitiesTransfer_toAssignmentId on activitiesTransfer.toAssignmentId.
-[2022-08-09 13:59:17] Created index_billedIncomes_contractId on billedIncomes.contractId.
-[2022-08-09 13:59:17] Created index_billedIncomes_projectId on billedIncomes.projectId.
-[2022-08-09 13:59:17] Created index_billedIncomes_WiPABemployeeId on billedIncomes.WiPABemployeeId.
-[2022-08-09 13:59:18] Created index_CRMAccounts_accountId on CRMAccounts.accountId.
-[2022-08-09 13:59:18] Created index_CRMAccounts_responsibleEmployeeId on CRMAccounts.responsibleEmployeeId.
-[2022-08-09 13:59:18] Created index_CRMAccounts_accountId on CRMAccounts.accountId.
-[2022-08-09 13:59:18] Created index_employees_employeeId on employees.employeeId.
-[2022-08-09 13:59:18] Created index_employees_managerEmployeeId on employees.managerEmployeeId.
-[2022-08-09 13:59:19] Created index_employeeSalaries_employeeId on employeeSalaries.employeeId.
-[2022-08-09 13:59:20] Created index_projectActivities_activityId on projectActivities.activityId.
-[2022-08-09 13:59:20] Created index_projectActivities_deliverableId on projectActivities.deliverableId.
-[2022-08-09 13:59:21] Created index_projectActivities_projectId on projectActivities.projectId.
-[2022-08-09 13:59:24] Created index_projectAssignments_activityId on projectAssignments.activityId.
-[2022-08-09 13:59:27] Created index_projectAssignments_assignmentId on projectAssignments.assignmentId.
-[2022-08-09 13:59:28] Created index_projectAssignments_employeeId on projectAssignments.employeeId.
-[2022-08-09 13:59:28] Created index_projectAssignments_projectId on projectAssignments.projectId.
-[2022-08-09 13:59:28] Created index_projectContracts_accountId on projectContracts.accountId.
-[2022-08-09 13:59:29] Created index_projectContracts_contractId on projectContracts.contractId.
-[2022-08-09 13:59:29] Created index_projectContracts_projectId on projectContracts.projectId.
-[2022-08-09 13:59:29] Created index_projectDeliverables_contractId on projectDeliverables.contractId.
-[2022-08-09 13:59:29] Created index_projectDeliverables_deliverableId on projectDeliverables.deliverableId.
-[2022-08-09 13:59:29] Created index_projectDeliverables_projectId on projectDeliverables.projectId.
-[2022-08-09 13:59:29] Created index_projectDeliverables_responsibleEmployeeId on projectDeliverables.responsibleEmployeeId.
-[2022-08-09 13:59:29] Created index_projects_endAccountId on projects.endAccountId.
-[2022-08-09 13:59:29] Created index_projects_invoicingResponsibleEmployeeId on projects.invoicingResponsibleEmployeeId.
-[2022-08-09 13:59:29] Created index_projects_projectAccountId on projects.projectAccountId.
-[2022-08-09 13:59:30] Created index_projects_projectId on projects.projectId.
-[2022-08-09 13:59:30] Created index_projects_projectManagerEmployeeId on projects.projectManagerEmployeeId.
-[2022-08-09 13:59:30] Created index_projects_projectResponsibleEmployeeId on projects.projectResponsibleEmployeeId.
-[2022-08-09 13:59:30] Created index_subcontractors_employeeId on subcontractors.employeeId.
-[2022-08-09 13:59:30] Created index_subcontractors_managerEmployeeId on subcontractors.managerEmployeeId.
-[2022-08-09 13:59:30] Created index_subcontractors_employeeId on subcontractors.employeeId.
-[2022-08-09 13:59:30] Created index_summaryDayAssignments_activityId on summaryDayAssignments.activityId.
-[2022-08-09 13:59:31] Created index_summaryDayAssignments_employeeId on summaryDayAssignments.employeeId.
-[2022-08-09 13:59:31] Created index_summaryDayAssignments_projectId on summaryDayAssignments.projectId.
-[2022-08-09 13:59:32] Created index_summaryDayEmployees_employeeId on summaryDayEmployees.employeeId.
-[2022-08-09 13:59:37] Created index_timeMoneyAdjustments_activityId on timeMoneyAdjustments.activityId.
-[2022-08-09 13:59:42] Created index_timeMoneyAdjustments_employeeId on timeMoneyAdjustments.employeeId.
+[...]
 [2022-08-09 13:59:42] ** DONE **
 ```
 
-For help, use: `python "mdc.py" --help`.
-```powershell
-usage: mdc.py [-h] [--input INPUT] [--output OUTPUT] [--encoding ENCODING] [--ensure_ascii] [--indent INDENT] [--mode MODE]
-              [--convert] [--sql] [--verbose] [--test]
 
-options:
-  -h, --help           show this help message and exit
-  --input INPUT        Input pathname (default: data/input/*.xml)
-  --output OUTPUT      Output directory (default: data/output)
-  --encoding ENCODING  File encoding (default: utf-8)
-  --ensure_ascii       Ensure ASCII encoding (default: False)
-  --indent INDENT      Indentation (default: \t)
-  --mode MODE          File mode (default: w)
-  --convert            Convert data from XML to JSON (default: False)
-  --sql                Import JSON data to Azure SQL database (default: False)
-  --verbose            Verbose (default: False)
-  --test               Skip import process (default: False)
-```
+For help, use: `python "mdc.py" --help`.
 
 The data will be imported, as JSON, into the "value" field, of the following tables, in a database named "manitoudb", in an Azure SQL Database instance.
 - absences;
@@ -187,52 +81,6 @@ The data will be imported, as JSON, into the "value" field, of the following tab
 - summaryDayAssignments;
 - summaryDayEmployees;
 - timeMoneyAdjustments.
-
-Here are examples of queries allowing the exploitation of data, in [SQL Server Management Studio](https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms):
-```sql
--- Employees
-SELECT DISTINCT e.employeeId
-  , e.statusEN
-  , e.name
-  , e.firstName
-  , e.sexEN
-  , e.languageEN
-  , e.email
-  , e.countryOfOriginEN
-  , e.birthDate
-  , e.hireDate
-  , e.employementEndDate
-  , e.workplaceEN
-  , JSON_VALUE(e.positions, '$.positionEN') AS positionEN
-FROM employees AS e
-WHERE e.statusEN = 'Active'
-  AND e.employementEndDate IS NULL
-  AND e.email LIKE '%@forensik.ca'
-ORDER BY e.name ASC
-  , e.firstName ASC
-;
-```
-
-```sql
--- Projects
-SELECT DISTINCT p.projectId
-  , p.projectTitle
-  , p.startDate
-  , p.expectedEndDate
-  , p.endDate
-  , p.statusEN
-  , e.name
-  , e.firstName
-  , e.email
-FROM projects AS p
-  LEFT JOIN employees AS e ON e.employeeId = p.projectManagerEmployeeId
-WHERE p.endDate IS NULL
-  AND p.projectTitle NOT LIKE 'Projet interne%'
-ORDER BY p.startDate ASC
-  , p.expectedEndDate ASC
-  , p.projectTitle ASC
-;
-```
 
 ## Import data into Power BI
 ### Create new report
