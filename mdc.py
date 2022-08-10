@@ -18,6 +18,7 @@ def main():
     parser.add_argument('--mode', default='w', help='File mode (default: w)')
     parser.add_argument('--convert', action='store_true', help='Convert data from XML to JSON (default: False)')
     parser.add_argument('--sql', action='store_true', help='Import JSON data to Azure SQL database (default: False)')
+    parser.add_argument('--export', action='store_true', help='Export SQL queries to HTML tables (default: False)')
     parser.add_argument('--verbose', action='store_true', help='Verbose (default: False)')
     parser.add_argument('--test', action='store_true', help='Skip import process (default: False)')
     arguments = parser.parse_args()
@@ -34,6 +35,10 @@ def main():
     if arguments.sql:
         azure.import_json_in_azure(arguments.output, 'conf/sql.json', encoding=arguments.encoding,
                                    ensure_ascii=arguments.ensure_ascii, verbose=arguments.verbose, test=arguments.test)
+
+    # Execute and export SQL queries to HTML tables
+    if arguments.export:
+        azure.execute_and_export('sql/*.sql', arguments.output)
 
     if arguments.verbose:
         io.print_colored('** DONE **', Fore.GREEN)

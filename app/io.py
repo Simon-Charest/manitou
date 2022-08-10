@@ -1,6 +1,66 @@
 import datetime
 
 
+def get_html_table(rows):
+    html_table = '''
+        <html>
+            <head>
+                <style>
+                    table, th, td
+                    {
+                        border: 1px solid;
+                    }
+                    .background-color
+                    {
+                        background-color: lightgray;
+                    }
+                </style>
+            </head>
+            <body>
+                <table>
+    '''
+
+    row_count = 0
+    columns = [column[0] for column in rows.description]
+
+    for row in rows:
+        if row_count % 2 == 0:
+            class_ = 'background-color'
+
+        else:
+            class_ = None
+
+        if row_count == 0:
+            html_table += '<tr>\n'
+
+            for column in columns:
+                html_table += f'<th>{column}</th>\n'
+
+            html_table += '</tr>\n'
+
+        html_table += '<tr>\n'
+
+        for column in row:
+            html_table += f"<td class='{class_}'>"
+
+            if column:
+                html_table += column
+
+            else:
+                html_table += '</td>\n'
+
+        html_table += '</tr>\n'
+        row_count += 1
+
+    html_table += '''
+                </table>
+            </body>
+        </html>
+    '''
+
+    return html_table
+
+
 def print_colored(string, foreground_color=None, fmt='%Y-%m-%d %H:%M:%S'):
     print(f'{foreground_color}[{datetime.datetime.now().strftime(fmt)}] {string}')
 

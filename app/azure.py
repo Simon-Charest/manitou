@@ -114,6 +114,36 @@ def import_json_in_azure(json_directory, sql_configuration, encoding=None, ensur
     connection.close()
 
 
+def execute_and_export(pathname, output_directory):
+    from app import io
+    import glob
+    import os
+    from pathlib import Path
+
+    paths = glob.glob(pathname)
+
+    for path in paths:
+        sql = io.read(path)
+        file = f'{output_directory}/{Path(os.path.basename(path)).stem}.htm'
+        export_html_table(sql, file)
+
+
+def export_html_table(sql, file, sql_configuration='conf/sql.json'):
+    from app import io
+
+    sql_configuration = io.read(sql_configuration)
+    connection = connect_azure_sql(sql_configuration['server'], sql_configuration['uid'], sql_configuration['pwd'],
+                                   sql_configuration['database'], sql_configuration['port'],
+                                   sql_configuration['driver'], sql_configuration['protocol'],
+                                   sql_configuration['persist_security_info'],
+                                   sql_configuration['multiple_active_result_sets'],
+                                   sql_configuration['connection_timeout'])
+    cursor = execute(connection, sql)
+    html_table = io.get_html_table(cursor)
+    io.write(html_table, file)
+    close([cursor, connection])
+
+
 def connect_azure_sql(server='localhost', uid='sa', pwd=None, database='master', port=1433,
                       driver='{ODBC Driver 17 for SQL Server}', protocol='tcp', persist_security_info=False,
                       multiple_active_result_sets=False, connection_timeout=30):
