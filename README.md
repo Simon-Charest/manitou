@@ -62,7 +62,6 @@ Execution example:
 [2022-08-09 13:59:42] ** DONE **
 ```
 
-
 For help, use: `python "mdc.py" --help`.
 
 The data will be imported, as JSON, into the "value" field, of the following tables, in a database named "manitoudb", in an Azure SQL Database instance.
@@ -81,6 +80,11 @@ The data will be imported, as JSON, into the "value" field, of the following tab
 - summaryDayAssignments;
 - summaryDayEmployees;
 - timeMoneyAdjustments.
+
+## Execute SQL queries and export results in HTML table format (optional)
+1. Run Windows PowerShell;
+2. Execute `python "mdc.py" --output "data/output" --export`;
+3. Find the resulting HTML files in the output subdirectory.
 
 ## Import data into Power BI
 ### Create new report
