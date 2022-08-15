@@ -1,4 +1,4 @@
--- Project deliverables
+-- Project Deliverables
 SELECT DISTINCT
     p.deliverableId
     , p.deliverableCode

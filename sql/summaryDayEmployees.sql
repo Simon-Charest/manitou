@@ -1,4 +1,4 @@
--- Summary day employees
+-- Daily Summary by Employee
 SELECT DISTINCT
     e.employeeId
     , e.employeeInternalNumber
