@@ -13,7 +13,7 @@ SELECT DISTINCT
     , e.hireDate
     , e.employementEndDate
     , e.workplaceEN
-    , JSON_VALUE(e.positions, '$.positionEN') AS positionEN
+    , JSON_VALUE(e.positions, '$.position.positionEN') AS positionEN
 FROM employees AS e
 WHERE e.statusEN = 'Active'
     AND e.employementEndDate IS NULL
