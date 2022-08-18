@@ -83,8 +83,8 @@ The data will be imported, as JSON, into the "value" field, of the following tab
 
 ## Execute SQL queries and export results in HTML table format (optional)
 1. Run Windows PowerShell;
-2. Execute `python "mdc.py" --output "data/output/html" --export`;
-3. Find the resulting HTML files in the output subdirectory.
+   1. Execute `python "mdc.py" --output "data/output/html" --export --verbose`;
+2. Find the resulting HTML files in the output subdirectory.
 
 ## Import data into Power BI
 ### Create new report

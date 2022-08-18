@@ -114,18 +114,22 @@ def import_json_in_azure(json_directory, sql_configuration, encoding=None, ensur
     connection.close()
 
 
-def execute_and_export(pathname, output_directory):
+def execute_and_export(pathname, output_directory, verbose=False):
     from app import io
+    from colorama import Fore
+    from pathlib import Path
     import glob
     import os
-    from pathlib import Path
 
     paths = glob.glob(pathname)
 
     for path in paths:
         sql = io.read(path)
         file = f'{output_directory}/{Path(os.path.basename(path)).stem}.htm'
-        export_html_table(sql, file)
+        record_count = export_html_table(sql, file)
+
+        if verbose:
+            io.print_colored(f'Exported {record_count} rows to {file}.', Fore.GREEN)
 
 
 def export_html_table(sql, file, sql_configuration='conf/sql.json'):
@@ -139,9 +143,12 @@ def export_html_table(sql, file, sql_configuration='conf/sql.json'):
                                    sql_configuration['multiple_active_result_sets'],
                                    sql_configuration['connection_timeout'])
     cursor = execute(connection, sql)
+    row_count = len(list(cursor))
     html_table = io.get_html_table(cursor)
     io.write(html_table, file)
     close([cursor, connection])
+
+    return row_count
 
 
 def connect_azure_sql(server='localhost', uid='sa', pwd=None, database='master', port=1433,

@@ -38,7 +38,7 @@ def main():
 
     # Execute and export SQL queries to HTML tables
     if arguments.export:
-        azure.execute_and_export('sql/*.sql', arguments.output)
+        azure.execute_and_export('sql/*.sql', arguments.output, arguments.verbose)
 
     if arguments.verbose:
         io.print_colored('** DONE **', Fore.GREEN)
