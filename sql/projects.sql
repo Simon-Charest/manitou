@@ -11,7 +11,7 @@ SELECT DISTINCT p.projectId
     , e.firstName
     , e.email
 FROM projects AS p
-    LEFT JOIN employees AS e ON e.employeeId = p.projectManagerEmployeeId
+    LEFT JOIN employees AS e ON e.employeeId = p.projectManagerEmployeeId AND e.statusEN = 'Active'
 WHERE p.endDate IS NULL
     AND p.projectTitle NOT LIKE 'Projet interne%'
 ORDER BY p.startDate ASC

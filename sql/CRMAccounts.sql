@@ -1,36 +1,36 @@
 -- Customer relationship management (CRM) Accounts
 SELECT DISTINCT
-    a.accountId
-    , a.code
-    , a.subsidiaryCode
-    , a.name
-    , a.officialName
-    , a.partnerEN
-    , a.competitorEN
-    , a.statusEN
-    , a.typeEN
-    , MIN(CAST(a.income AS MONEY)) AS incomeMin
-    , AVG(CAST(a.income AS MONEY)) AS incomeAvg
-    , MAX(CAST(a.income AS MONEY)) AS incomeMax
-    , MIN(CAST(a.incomeYear AS INT)) AS incomeYearMin
-    , MAX(CAST(a.incomeYear AS INT)) AS incomeYearMax
-    , MIN(CAST(a.score AS INT)) AS scoreMin
-    , AVG(CAST(a.score AS INT)) AS scoreAvg
-    , MAX(CAST(a.score AS INT)) AS scoreMax
+    crma.accountId
+    , crma.code
+    , crma.subsidiaryCode
+    , crma.name
+    , crma.officialName
+    , crma.partnerEN
+    , crma.competitorEN
+    , crma.statusEN
+    , crma.typeEN
+    , MIN(CAST(crma.income AS MONEY)) AS incomeMin
+    , AVG(CAST(crma.income AS MONEY)) AS incomeAvg
+    , MAX(CAST(crma.income AS MONEY)) AS incomeMax
+    , MIN(CAST(crma.incomeYear AS INT)) AS incomeYearMin
+    , MAX(CAST(crma.incomeYear AS INT)) AS incomeYearMax
+    , MIN(CAST(crma.score AS INT)) AS scoreMin
+    , AVG(CAST(crma.score AS INT)) AS scoreAvg
+    , MAX(CAST(crma.score AS INT)) AS scoreMax
     , MIN(CAST(employeesNumber AS INT)) AS employeesNumberMin
     , AVG(CAST(employeesNumber AS INT)) AS employeesNumberAvg
     , MAX(CAST(employeesNumber AS INT)) AS employeesNumberMax
-FROM CRMAccounts AS a
-    GROUP BY a.accountId
-    , a.code
-    , a.subsidiaryCode
-    , a.name
-    , a.officialName
-    , a.partnerEN
-    , a.competitorEN
-    , a.statusEN
-    , a.typeEN
-ORDER BY a.partnerEN DESC
-    , a.competitorEN DESC
-    , a.name ASC
+FROM CRMAccounts AS crma
+    GROUP BY crma.accountId
+    , crma.code
+    , crma.subsidiaryCode
+    , crma.name
+    , crma.officialName
+    , crma.partnerEN
+    , crma.competitorEN
+    , crma.statusEN
+    , crma.typeEN
+ORDER BY crma.partnerEN DESC
+    , crma.competitorEN DESC
+    , crma.name ASC
 ;

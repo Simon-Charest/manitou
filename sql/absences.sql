@@ -21,7 +21,7 @@ SELECT DISTINCT
 	, COUNT(a.absenceDate) AS absenceDateCount
 	, SUM(CAST(a.hours AS FLOAT)) AS hoursSum
 FROM absences AS a
-	LEFT JOIN employees AS e ON e.employeeId = a.employeeId
+	LEFT JOIN employees AS e ON e.employeeId = a.employeeId AND e.statusEN = 'Active'
 WHERE
 	(
 		e.activityPeriods LIKE '%"divisionEN": "Forensik"%'
@@ -30,7 +30,6 @@ WHERE
 	AND
 	(
 		e.employementEndDate IS NULL
-		OR e.statusEN = 'Active'
 	)
 GROUP BY e.employeeId
     , e.employeeInternalNumber

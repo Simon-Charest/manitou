@@ -17,15 +17,15 @@ SELECT DISTINCT
     , e.workplaceEN
     , JSON_VALUE(e.positions, '$.position.positionEN') AS positionEN
 	, JSON_VALUE(e.activityPeriods, '$.activityPeriod.divisionEN') AS divisionEN
-	, s.unit
-	, MIN(CAST(s.value AS MONEY)) AS valueMin
-	, AVG(CAST(s.value AS MONEY)) AS valueAvg
-	, MAX(CAST(s.value AS MONEY)) AS valueMax
-	, ROUND(MIN(CAST(s.value AS MONEY)) * 1321.5859030837, 0) AS annualValueMin
-	, ROUND(AVG(CAST(s.value AS MONEY)) * 1321.5859030837, 0) AS annualValueAvg
-	, ROUND(MAX(CAST(s.value AS MONEY)) * 1321.5859030837, 0) AS annualValueMax
-FROM employeeSalaries AS s
-	LEFT JOIN employees AS e ON e.employeeId = s.employeeId
+	, es.unit
+	, MIN(CAST(es.value AS MONEY)) AS valueMin
+	, AVG(CAST(es.value AS MONEY)) AS valueAvg
+	, MAX(CAST(es.value AS MONEY)) AS valueMax
+	, ROUND(MIN(CAST(es.value AS MONEY)) * 1321.5859030837, 0) AS annualValueMin
+	, ROUND(AVG(CAST(es.value AS MONEY)) * 1321.5859030837, 0) AS annualValueAvg
+	, ROUND(MAX(CAST(es.value AS MONEY)) * 1321.5859030837, 0) AS annualValueMax
+FROM employeeSalaries AS es
+	LEFT JOIN employees AS e ON e.employeeId = es.employeeId AND e.statusEN = 'Active'
 WHERE
 	(
 		e.activityPeriods LIKE '%"divisionEN": "Forensik"%'
@@ -51,8 +51,8 @@ GROUP BY e.employeeId
     , e.workplaceEN
     , JSON_VALUE(e.positions, '$.position.positionEN')
 	, JSON_VALUE(e.activityPeriods, '$.activityPeriod.divisionEN')
-	, s.unit
-ORDER BY MAX(CAST(s.value AS MONEY)) DESC
-	, AVG(CAST(s.value AS MONEY)) DESC
-	, MIN(CAST(s.value AS MONEY)) DESC
+	, es.unit
+ORDER BY valueMax DESC
+	, valueAvg DESC
+	, valueMin DESC
 ;
