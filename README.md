@@ -4,7 +4,7 @@
 This solution was developed taking into account the absence of a web API for the Manitou application as well as the fact that it is easier to use data from a database than a batch of XML files.
 
 This solution:
-1. Expects [XML](https://en.wikipedia.org/wiki/XML) files (i.e., data/input/*.xml), manually extracted from the [Manitou](https://manitousolution.com/application) application (i.e., Log In &rarr; General &rarr; Export data (beta));
+1. Expects [XML](https://en.wikipedia.org/wiki/XML) files (i.e., data/input/xml/*.xml), manually extracted from the [Manitou](https://manitousolution.com/application) application (i.e., Log In &rarr; General &rarr; Export data (beta));
 2. Reads the said files;
 3. Converts them to the [JSON](https://en.wikipedia.org/wiki/JSON) data format;
 4. Imports the data to [Azure SQL Database](https://en.wikipedia.org/wiki/Microsoft_Azure_SQL_Database);
@@ -40,17 +40,17 @@ flowchart TD
 3. Click + Add, select a Start of extraction (i.e., 2022 January), enter a Number of periods to export (i.e., 6 (months, including the selected Start of extraction)) and select a Requestor (i.e., yourself);
 4. Wait after 22 h that night for the query to run;
 5. Click on the corresponding Consult button (paperclip icon) to download the archive;
-6. Right-click the archive &rarr; Extract All... &rarr; Select a destination folder (i.e., `C:\temp\manitou\data\input`) &rarr; Extract;
+6. Right-click the archive &rarr; Extract All... &rarr; Select a destination folder (i.e., `C:\temp\manitou\data\input\xml`) &rarr; Extract;
 
 ## Convert and import data using this solution
 1. Run Windows PowerShell;
-2. Execute `python "mdc.py" --input "data/input/*.xml" --output "data/output" --convert --sql --verbose`.
+2. Execute `python "mdc.py" --input "data/input/xml/*.xml" --output "data/output/json" --convert --sql --verbose`.
 
 Execution example:
 ```powershell
-[2022-08-09 13:21:22] Deleted 15 JSON files in data/output.
-[2022-08-09 13:21:22] Found 35 XML files in data/input.
-[2022-08-09 13:21:22] Wrote 235 documents to data/output/absences.json.
+[2022-08-09 13:21:22] Deleted 15 JSON files in data/output/json.
+[2022-08-09 13:21:22] Found 35 XML files in data/input/xml.
+[2022-08-09 13:21:22] Wrote 235 documents to data/output/json/absences.json.
 [...]
 [2022-08-09 13:21:30] Importing JSON data to 15 tables in Azure SQL Database...
 [2022-08-09 13:21:30] Dropped 3 tables.
@@ -83,7 +83,7 @@ The data will be imported, as JSON, into the "value" field, of the following tab
 
 ## Execute SQL queries and export results in HTML table format (optional)
 1. Run Windows PowerShell;
-2. Execute `python "mdc.py" --output "data/output" --export`;
+2. Execute `python "mdc.py" --output "data/output/html" --export`;
 3. Find the resulting HTML files in the output subdirectory.
 
 ## Import data into Power BI
