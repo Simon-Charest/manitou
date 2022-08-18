@@ -134,6 +134,8 @@ dmypy.json
 # This solution
 conf/*
 data/
+Scripts/
 o365_token.txt
+pyvenv.cfg
 !conf/*_template.json
 !conf/indexes.json

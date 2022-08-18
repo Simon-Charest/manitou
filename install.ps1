@@ -12,5 +12,8 @@ python "$($PSScriptRoot)\\bin\\get-pip.py"
 
 # Install requirements
 pip install colorama
+pip install O365
+pip install pip
 pip install pyodbc
+pip install setuptools
 pip install xmltodict
