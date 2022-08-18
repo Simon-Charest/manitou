@@ -1,7 +1,7 @@
 import datetime
 
 
-def get_html_table(rows):
+def get_html_table(rows, columns):
     html_table = '''
         <html>
             <head>
@@ -21,7 +21,6 @@ def get_html_table(rows):
     '''
 
     row_count = 0
-    columns = [column[0] for column in rows.description]
 
     for row in rows:
         if row_count % 2 == 0:
@@ -59,6 +58,16 @@ def get_html_table(rows):
     '''
 
     return html_table
+
+
+def get_random_color(minimum=0, maximum=255):
+    import random
+
+    red = random.randint(minimum, maximum)
+    green = random.randint(minimum, maximum)
+    blue = random.randint(minimum, maximum)
+
+    return f"'rgb({red}, {green}, {blue})'"
 
 
 def print_colored(string, foreground_color=None, fmt='%Y-%m-%d %H:%M:%S'):

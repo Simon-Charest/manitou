@@ -114,7 +114,7 @@ def import_json_in_azure(json_directory, sql_configuration, encoding=None, ensur
     connection.close()
 
 
-def execute_and_export(pathname, output_directory, verbose=False):
+def export_table(pathname, output_directory, verbose=False):
     from app import io
     from colorama import Fore
     from pathlib import Path
@@ -126,13 +126,28 @@ def execute_and_export(pathname, output_directory, verbose=False):
     for path in paths:
         sql = io.read(path)
         file = f'{output_directory}/{Path(os.path.basename(path)).stem}.htm'
-        record_count = export_html_table(sql, file)
+        record_count = write_table(sql, file)
 
         if verbose:
             io.print_colored(f'Exported {record_count} rows to {file}.', Fore.GREEN)
 
 
-def export_html_table(sql, file, sql_configuration='conf/sql.json'):
+def export_chart(paths, template, output_directory, verbose=False):
+    from app import io
+    from colorama import Fore
+    from pathlib import Path
+    import os
+
+    for path in paths:
+        sql = io.read(path)
+        file = f'{output_directory}/{Path(os.path.basename(path)).stem}.htm'
+        record_count = write_chart(sql, template, file)
+
+        if verbose:
+            io.print_colored(f'Exported {record_count} rows to {file}.', Fore.GREEN)
+
+
+def write_chart(sql, template_file, file, sql_configuration='conf/sql.json'):
     from app import io
 
     sql_configuration = io.read(sql_configuration)
@@ -143,10 +158,56 @@ def export_html_table(sql, file, sql_configuration='conf/sql.json'):
                                    sql_configuration['multiple_active_result_sets'],
                                    sql_configuration['connection_timeout'])
     cursor = execute(connection, sql)
-    row_count = len(list(cursor))
-    html_table = io.get_html_table(cursor)
-    io.write(html_table, file)
+    rows = [row for row in cursor]
     close([cursor, connection])
+    row_count = len(rows)
+
+    # Fetch data
+    data = ', '.join([f"{row.annualValueMax}" for row in rows])
+    background_colors = ', '.join([f"{io.get_random_color()}" for _ in rows])
+    labels = ', '.join([f"'{row.email}'" for row in rows])
+    datasets = f"{{label: 'Annual Salary', backgroundColor: {io.get_random_color()}, data: [{data}]}}"
+    title_text = 'Employee Salaries'
+    annotations = ''
+    x_axes_label = 'Emails'
+    y_axes_label = 'Annual Salary'
+
+    # Read template
+    template = io.read(template_file)
+
+    # Fill template
+    template = template.replace('{{DATA}}', data)
+    template = template.replace('{{BACKGROUNDCOLOR}}', background_colors)
+    template = template.replace('{{LABELS}}', labels)
+    template = template.replace('{{DATASETS}}', datasets)
+    template = template.replace('{{TITLE_TEXT}}', title_text)
+    template = template.replace('{{ANNOTATIONS}}', annotations)
+    template = template.replace('{{X_AXES_LABEL}}', x_axes_label)
+    template = template.replace('{{Y_AXES_LABEL}}', y_axes_label)
+
+    # Write template to file
+    io.write(template, file)
+
+    return row_count
+
+
+def write_table(sql, file, sql_configuration='conf/sql.json'):
+    from app import io
+
+    sql_configuration = io.read(sql_configuration)
+    connection = connect_azure_sql(sql_configuration['server'], sql_configuration['uid'], sql_configuration['pwd'],
+                                   sql_configuration['database'], sql_configuration['port'],
+                                   sql_configuration['driver'], sql_configuration['protocol'],
+                                   sql_configuration['persist_security_info'],
+                                   sql_configuration['multiple_active_result_sets'],
+                                   sql_configuration['connection_timeout'])
+    cursor = execute(connection, sql)
+    columns = [column[0] for column in cursor.description]
+    rows = [row for row in cursor]
+    close([cursor, connection])
+    row_count = len(rows)
+    html_table = io.get_html_table(rows, columns)
+    io.write(html_table, file)
 
     return row_count
 

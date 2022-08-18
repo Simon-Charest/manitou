@@ -21,9 +21,9 @@ SELECT DISTINCT
 	, MIN(CAST(es.value AS MONEY)) AS valueMin
 	, AVG(CAST(es.value AS MONEY)) AS valueAvg
 	, MAX(CAST(es.value AS MONEY)) AS valueMax
-	, ROUND(MIN(CAST(es.value AS MONEY)) * 1321.5859030837, 0) AS annualValueMin
-	, ROUND(AVG(CAST(es.value AS MONEY)) * 1321.5859030837, 0) AS annualValueAvg
-	, ROUND(MAX(CAST(es.value AS MONEY)) * 1321.5859030837, 0) AS annualValueMax
+	, CAST(ROUND(MIN(CAST(es.value AS MONEY)) * 1321.5859030837, 0) AS MONEY) AS annualValueMin
+	, CAST(ROUND(AVG(CAST(es.value AS MONEY)) * 1321.5859030837, 0) AS MONEY) AS annualValueAvg
+	, CAST(ROUND(MAX(CAST(es.value AS MONEY)) * 1321.5859030837, 0) AS MONEY) AS annualValueMax
 FROM employeeSalaries AS es
 	LEFT JOIN employees AS e ON e.employeeId = es.employeeId AND e.statusEN = 'Active'
 WHERE

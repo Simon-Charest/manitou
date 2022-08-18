@@ -38,7 +38,11 @@ def main():
 
     # Execute and export SQL queries to HTML tables
     if arguments.export:
-        azure.execute_and_export('sql/*.sql', arguments.output, arguments.verbose)
+        azure.export_table('sql/*.sql', f'{arguments.output}/table', arguments.verbose)
+        azure.export_chart(['sql/employeeSalaries.sql'], 'template/pie.htm', f'{arguments.output}/chart/pie',
+                           arguments.verbose)
+        azure.export_chart(['sql/employeeSalaries.sql'], 'template/line.htm', f'{arguments.output}/chart/line',
+                           arguments.verbose)
 
     if arguments.verbose:
         io.print_colored('** DONE **', Fore.GREEN)

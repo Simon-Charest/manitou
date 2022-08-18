@@ -1,0 +1,167 @@
+<!doctype html>
+<html>
+	<head>
+		<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+		<meta content="utf-8" http-equiv="encoding">
+		<title>Pie Chart</title>
+		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels/dist/chartjs-plugin-datalabels.min.js"></script>
+	</head>
+	<body>
+		<div style="width:75%">
+			<canvas id="pieChart"></canvas>
+		</div>
+		<script>
+			var id = 'pieChart';
+			var type = 'pie';
+			var colors =
+			{
+				black: 'rgb(0, 0, 0)'
+				, grey: 'rgb(127, 127, 127)'
+				, lightgrey: 'rgb(195, 195, 195)'
+				, red: 'rgb(255, 0, 0)'
+				, green: 'rgb(0, 255, 0)'
+				, blue: 'rgb(0, 0, 255)'
+				, yellow: 'rgb(255, 255, 0)'
+				, magenta: 'rgb(255, 0, 255)'
+				, cyan: 'rgb(0, 255, 255)'
+				, indigo: 'rgb(75, 0, 130)'
+				, purple: 'rgb(128, 0, 128)'
+				, lightgreen: 'rgb(144, 238, 144)'
+				, brown: 'rgb(165, 42, 42)'
+				, violet: 'rgb(238, 130, 238)'
+				, orange: 'rgb(255, 165, 0)'
+				, pink: 'rgb(255, 192, 203)'
+				, white: 'rgb(255, 255, 255)'
+				
+				// Chart.js
+				, JS:
+				{
+					red: 'rgb(255, 99, 132)'
+					, orange: 'rgb(255, 159, 64)'
+					, yellow: 'rgb(255, 205, 86)'
+					, green: 'rgb(75, 192, 192)'
+					, blue: 'rgb(54, 162, 235)'
+					, purple: 'rgb(153, 102, 255)'
+					, grey: 'rgb(201, 203, 207)'
+				}
+				
+				// In Fidem / Forensik
+				, IF:
+				{
+					grey: 'rgb(51, 51, 51)'
+				}
+				
+				// Microsoft
+				, MS:
+				{
+					blue: 'rgb(0, 120, 215)'		// Ex: Exchange, OneDrive, SharePoint
+					, cyan: 'rgb(0, 188, 242)'		// Ex: GroupMe
+					, green: 'rgb(33, 115, 70)'		// Ex: Excel
+					, orange: 'rgb(216, 59, 1)'		// Ex: Office Store
+					, pink: 'rgb(195, 0, 82)'		// Ex: Stream
+					, purple: 'rgb(92, 45, 145)'	// Ex: OneNote
+					, yellow: 'rgb(255, 185, 0)'	// Ex: Power BI
+
+					// Workloads
+					, Exchange: 'rgb(33, 115, 70)'
+					, OneDrive: 'rgb(0, 120, 215)'
+					, SharePoint: 'rgb(216, 59, 1)'
+
+					/* Operations */
+
+					// Successes
+					, UserLoggedIn: 'rgb(75, 192, 192)'
+
+					// Failures
+					, UserLoginFailed: 'rgb(153, 0, 0)'
+
+					// Select
+					, FilePreviewed: 'rgb(54, 162, 235)'
+					, FileSyncDownloadedFull: 'rgb(54, 162, 235)'
+					, SupervisoryReviewOLAudit: 'rgb(54, 162, 235)'
+
+					// Insert
+					, Createapplicationpasswordforuser: 'rgb(75, 192, 192)'
+					, NewInboxRule: 'rgb(75, 192, 192)'
+					, SetInboxRule: 'rgb(75, 192, 192)'
+
+					// Update
+					, Update: 'rgb(255, 159, 64)'
+					, Updatedevice: 'rgb(255, 159, 64)'
+					, UpdateStsRefreshTokenValidFromTimestamp: 'rgb(255, 159, 64)'
+					, Updateuser: 'rgb(255, 159, 64)'
+
+					// Upload
+					, FileSyncUploadedFull: 'rgb(255, 99, 132)'
+					, SendOnBehalf: 'rgb(255, 99, 132)'
+
+					// Delete
+					, Deleteapplicationpasswordforuser: 'rgb(255, 99, 132)'
+					, HardDelete: 'rgb(255, 0, 0)'
+					, MoveToDeletedItems: 'rgb(255, 204, 204)'
+					, RemoveInboxRule: 'rgb(255, 99, 132)'
+					, SoftDelete: 'rgb(255, 99, 132)'
+
+					// Teams
+					, TeamsSessionStarted: 'rgb(70, 78, 184)'
+
+					, Other: 'rgb(51, 51, 51)'
+				}
+			};
+			var configuration =
+			{
+				type: type,
+				data:
+				{
+					datasets:
+					[
+						{
+							data: [{{DATA}}]
+							, backgroundColor: [{{BACKGROUNDCOLOR}}]
+						}
+					]
+					, labels: [{{LABELS}}]
+					/*
+					datasets:
+					[
+						{
+							data: [17.01, 62.84, 20.15]
+							, backgroundColor: [colors.MS.Exchange, colors.MS.OneDrive, colors.MS.SharePoint]
+						}
+					]
+					, labels: ['Exchange', 'OneDrive', 'SharePoint']
+					*/
+				}
+				, options:
+				{
+					responsive: true
+					, title:
+					{
+						display: true
+						, text: '{{TITLE_TEXT}}'
+					}
+					, plugins:
+					{
+						datalabels:
+						{
+							color: '#ffffff'
+							, font:
+							{
+								size: 24
+								, weight: 'bold'
+							}
+						}
+					}
+				}
+			};
+
+			window.onload = function()
+			{
+				var context = document.getElementById(id).getContext('2d');
+				
+				window.chart = new Chart(context, configuration);
+			};
+		</script>
+	</body>
+</html>
